@@ -40,6 +40,11 @@ from browser import document, html
 from browser import window as win
 from browser import ajax
 
+try:
+   SUPERPYTHON = win.__SUPERPYTHON__
+except Exception as _:
+   SUPERPYTHON = None
+
 CURSOR_STYLE = 'width: {}px, height: {}px, min-height: {}px, border-radius: 30px,' \
                ' left:{}px, top: {}px, position: absolute'
 CURSOR_ELEMENT = 'left={}, top={}, width={}, height={}'
@@ -361,8 +366,8 @@ class Inventario:
     def score(self, casa, carta, move, ponto, valor):
         data = dict(doc_id=INVENTARIO.GID, carta=carta, casa=casa, move=move, ponto=ponto, valor=valor,
                     tempo=win.Date.now())
-        self.send('store', data)
-        print('store', data)
+        SUPERPYTHON.scorer(data) if SUPYGIRLS else None
+        # print('store', data)
 
     @staticmethod
     def send(operation, data, action=lambda t: None, method="POST"):
