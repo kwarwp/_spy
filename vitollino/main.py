@@ -366,7 +366,7 @@ class Inventario:
     def score(self, casa, carta, move, ponto, valor):
         data = dict(doc_id=INVENTARIO.GID, carta=carta, casa=casa, move=move, ponto=ponto, valor=valor,
                     tempo=win.Date.now())
-        SUPERPYTHON.scorer(data) if SUPYGIRLS else None
+        SUPERPYTHON.scorer(data) if SUPERPYTHON else None
         # print('store', data)
 
     @staticmethod
