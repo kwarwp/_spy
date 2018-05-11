@@ -364,9 +364,9 @@ class Inventario:
         self.limbo <= item_img
         return self.inventario.pop(nome_item, None)
 
-    def score(self, casa, carta, move, ponto, valor):
+    def score(self, casa, carta, move, ponto, valor, _level=1):
         data = dict(doc_id=INVENTARIO.GID, carta=carta, casa=casa, move=move, ponto=ponto, valor=valor,
-                    tempo=win.Date.now())
+                    _level=_level, tempo=win.Date.now())
         SUPERPYTHON.scorer(data) if SUPERPYTHON else None
         # print('store', data)
 
