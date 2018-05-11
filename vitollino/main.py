@@ -39,6 +39,7 @@ import json
 from browser import document, html
 from browser import window as win
 from browser import ajax
+import uuid
 
 try:
    SUPERPYTHON = win.__SUPERPYTHON__
@@ -288,7 +289,7 @@ class Inventario:
     :param tela: Div do HTML onde o inventário será anexado
     """
     """# Usado para definir um jogador no modo multiusuário"""
-    GID = "00000000000000000000"  # Usado para definir um jogador no modo multiusuário
+    GID = str(uuid.uuid4())[:8]  # Usado para definir um jogador no modo multiusuário
 
     def __init__(self, tela=DOC_PYDIV):
         self.tela = tela
