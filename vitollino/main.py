@@ -415,7 +415,7 @@ class Elemento:
     """
     limbo = html.DIV(style=LSTYLE)
 
-    def __init__(self, img="", vai=None, style=NS, tit="", alt="", cena=None, score=NOSC, drag=False, drop='', **kwargs):
+    def __init__(self, img="", vai=None, style=NS, tit="", alt="", cena=INVENTARIO, score=NOSC, drag=False, drop='', **kwargs):
         self._auto_score = self.score if score else self._auto_score
         self.img = img
         self.vai = vai if vai else lambda _=0: None
@@ -435,7 +435,7 @@ class Elemento:
         self.c(**kwargs)
         _ = Dragger(self.elt) if drag else None
         _ = Droppable(self.elt, drop, self.vai) if drop else None
-        _ = self.entra(cena) if cena else None
+        _ = self.entra(cena) if cena and (cena != INVENTARIO) else None
 
     def _auto_score(self, **kwargs):
         pass
