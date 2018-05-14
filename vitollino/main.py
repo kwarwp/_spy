@@ -317,6 +317,7 @@ class Inventario:
 
     def inicia(self):
         self.elt.html = ""
+        self.inventario = {}
         self.cena = None
         self.opacity = 0
         self.mostra()
@@ -414,7 +415,7 @@ class Elemento:
     """
     limbo = html.DIV(style=LSTYLE)
 
-    def __init__(self, img="", vai=None, style=NS, tit="", alt="", cena=INVENTARIO, score=NOSC, **kwargs):
+    def __init__(self, img="", vai=None, style=NS, tit="", alt="", cena=None, score=NOSC, drag=False, drop='', **kwargs):
         self._auto_score = self.score if score else self._auto_score
         self.img = img
         self.vai = vai if vai else lambda _=0: None
@@ -432,6 +433,9 @@ class Elemento:
             self.elt <= self.img
         self.elt.onclick = self._click
         self.c(**kwargs)
+        _ = Dragger(self.elt) if drag else None
+        _ = Droppable(self.elt, drop, self.vai) if drop else None
+        _ = self.entra(cena) if cena else None
 
     def _auto_score(self, **kwargs):
         pass
@@ -884,10 +888,11 @@ class Popup:
 
 
 class Texto(Popup):
-    def __init__(self, cena=NADA, tit="", txt="", **kwargs):
+    def __init__(self, cena=NADA, tit="", txt="", foi=None, **kwargs):
         super().__init__(None, tit=tit, txt=txt, vai=None, **kwargs)
         #self.elt = Popup.POP.popup
         self.cena = cena
+        self.esconde = foi if foi else self.esconde
         #cena <= self
 
     def esconde(self, ev=NoEv()):
@@ -903,10 +908,11 @@ class Texto(Popup):
 
     def vai(self, ev=NoEv()):
         # self.elt = Popup.POP.popup
+        ev.stopPropagation()
         self.cena.elt <= Popup.POP.popup
         Popup.POP.mostra(lambda *_: None, self.tit, self.txt)
         Popup.POP.esconde = self.esconde
-        pass
+        return False
 
     @staticmethod
     def texto(tit="", txt="", **kwars):
@@ -1207,6 +1213,7 @@ class Droppable:
         elt = document[src_id]
         elt.style.cursor = self.cursor or "auto"
         ev.preventDefault()
+        return False
 
     def drop(self, ev):
         ev.preventDefault()
@@ -1215,6 +1222,7 @@ class Droppable:
         elt.style.cursor = "auto"
         if self.dropper_name == src_id:
             self.action(elt, self)
+        return False
 
 
 class Folha:
