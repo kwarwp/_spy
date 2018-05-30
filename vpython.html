@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="http://www.glowscript.org/lib/jquery/1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://www.glowscript.org/lib/jquery/1.1/jquery-ui.custom.min.js"></script>
+    <script type="text/javascript" src="../stlib/brython.js"></script>
+    <script type="text/javascript" src="../stlib/brython_stdlib.js"></script>
+    <script type="text/python3">
+            from browser import doc, html
+            doc["glowscript"] <= html.H1('XXXXXXXXX -------------- XXXXXXXXXXX')
+            from vpython import *
+            _gs=Glow('glowscript')
+            scene=canvas()
+            scene.background= color.white #"rgba(0, 0, 200, 0.5)"
+            scene.width = 600
+            scene.height = 600
+            box(color=color.red)
+            sphere(pos=(2, 0, 0), color=color.green)
+            cone(pos=(0, 2, 0), color=color.blue)
+            cylinder(pos=(2, 2, 0), color=color.yellow)
+            pyramid(pos=(0, 0, 2), color=color.magenta)
+            ring(pos=(0, 2, 2), color=color.cyan)
+
+    </script>
+
+
+</head>
+<body onload="brython()">
+    <div id="glowscript" class="glowscript">
+    </div>
+</body>
+</html>
