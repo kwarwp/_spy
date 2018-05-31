@@ -189,6 +189,24 @@ class helix(cylinder):
         primitive.__init__(self, window.glowscript.helix, **kwargs)
 
 
+# shapes = window.glowscript.shapes
+
+
+class extrusion(primitive):
+    def __init__(self, **kwargs):
+        primitive.__init__(self, window.glowscript.extrusion, **kwargs)
+
+
+class text(primitive):
+    def __init__(self, **kwargs):
+        primitive.__init__(self, window.glowscript.text, **kwargs)
+
+
+class ellipsoid(primitive):
+    def __init__(self, **kwargs):
+        primitive.__init__(self, window.glowscript.sphere, **kwargs)
+
+
 class pyramid(primitive):
     def __init__(self, **kwargs):
         primitive.__init__(self, window.glowscript.pyramid, **kwargs)
