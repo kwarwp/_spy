@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="http://www.glowscript.org/lib/jquery/1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://www.glowscript.org/lib/jquery/1.1/jquery-ui.custom.min.js"></script>
+    <script type="text/javascript" src="../stlib/brython.js"></script>
+    <script type="text/javascript" src="../stlib/brython_stdlib.js"></script>
+    <script type="text/python3">
+            from browser import doc, html
+            doc["glowscript"] <= html.H1('XXXXXXXXX -------------- XXXXXXXXXXX')
+            from vpython import *
+            _gs=Glow('glowscript')
+            scene=canvas()
+            scene.background= color.blue #"rgba(0, 0, 200, 0.5)"
+            scene.width = 600
+            scene.height = 600
+            #box(color=color.red)
+            #s = shapes.rectangle(width=10, height=6)
+            sphere(pos=(1.5, -0.5, 0),size=(1,0.1,0.5), axis=(0,1,0), color=color.black)
+            sphere(pos=(1.5, 0.5, 0),size=(1,0.1,0.5), axis=(0,1,0), color=color.black)
+            #pyramid(pos=(1, -0.5, 0),size=(0.5,0.1,1), axis=(0,1,0), color=color.black)
+            sphere(pos=(2, 0, 0), color=color.yellow)
+            sphere(pos=(4, 0, 0), color=color.yellow)
+            #cone(pos=(0, 2, 0), color=color.blue)
+            #cylinder(pos=(2, 0, 0), size=(2,3,4) , color=color.yellow)
+            cylinder(pos=(3, 0, 0), axis=vec(4, 0, 0) , color=color.yellow)
+            #pyramid(pos=(0, 0, 2), color=color.magenta)
+            #ring(pos=(0, 2, 2), color=color.cyan)
+
+    </script>
+
+
+</head>
+<body onload="brython()">
+    <div id="glowscript" class="glowscript">
+    </div>
+</body>
+</html>
