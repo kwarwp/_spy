@@ -1,7 +1,4 @@
 from browser import document, window
-
-GLOWSCRIPT = window.glowscript
-
 from .primitive import box, arrow, cone, curve, pyramid, helix, cylinder, ellipsoid
 from .primitive import sphere, ring, attach_trail, compound, extrusion, text
 from .utils import create_script_tag
