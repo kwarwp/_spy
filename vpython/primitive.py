@@ -11,9 +11,9 @@ class primitive:
             if isinstance(kwargs[_key], vec):
                 kwargs[_key] = kwargs[_key]._vec
         if "compound" in kwargs:
-            print(kwargs["compound"])
+            # print(kwargs["compound"])
             # self._prim=prim(kwargs["compound"])
-            self._prim = window.glowscript.compound(kwargs["compound"])
+            self._prim = window.glowscript.compound(kwargs.pop("compound"), kwargs)
             return
         self._prim = prim(kwargs)
 
@@ -23,6 +23,10 @@ class primitive:
             kwargs['axis'] = kwargs['axis']._vec
 
         self._prim.rotate(kwargs)
+
+    @property
+    def prim(self):
+        return self._prim
 
     @property
     def pos(self):
@@ -238,9 +242,9 @@ class sphere(primitive):
 # quad
 
 # compound
-class compound:
-    def __init__(self, comps):
-        primitive.__init__(self, window.glowscript.compound, compound=comps)
+class compound(primitive):
+    def __init__(self, comps, **kwargs):
+        primitive.__init__(self, window.glowscript.compound, compound=[c.prim for c in comps], **kwargs)
 
 
 # I'm not sure if the declarations below are correct.  Will fix later.
