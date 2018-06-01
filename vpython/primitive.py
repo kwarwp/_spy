@@ -1,6 +1,54 @@
-from .vector import vec
-#from vpython import GLOWSCRIPT as window.glowscript
 from browser import window
+
+from .vector import vec
+
+
+class paths:
+    ...
+
+
+class shapes:
+    ...
+
+
+class ShapeInit:
+    def __init__(self):
+        s = window.shapes
+        p = window.paths
+
+        shapes_ = ['rectangle', 'circle', 'ellipse', 'arc', 'line', 'triangle',
+                   'pentagon', 'hexagon', 'octagon', 'ngon', 'star', 'trapezoid',
+                   'cross', 'points', 'gear', 'rackgear']
+        shdic_ = dict(rectangle=s.rectangle, circle=s.circle, ellipse=s.ellipse, arc=s.arc, line=s.line,
+                      triangle=s.triangle,
+                      pentagon=s.pentagon, hexagon=s.hexagon, octagon=s.octagon, ngon=s.ngon, star=s.star,
+                      trapezoid=s.trapezoid, cross=s.cross, points=s.points, gear=s.gear, rackgear=s.rackgear
+                      )
+
+        phdic_ = dict(rectangle=p.rectangle, circle=p.circle, ellipse=p.ellipse, arc=p.arc, line=p.line,
+                      triangle=p.triangle,
+                      pentagon=p.pentagon, hexagon=p.hexagon, octagon=p.octagon, ngon=p.ngon, star=p.star,
+                      trapezoid=p.trapezoid, cross=p.cross
+                      )
+
+        def _paths_call(classname):
+            def __paths_call(_, **kwargs):
+                return phdic_[classname](kwargs)
+
+            return __paths_call
+
+        def _shapes_call(classname):
+            def _shapes_init(_, **kwargs):
+                return shdic_[classname](kwargs)
+
+            return _shapes_init
+
+        _ = [setattr(paths, classname, type(classname, (), dict(
+            __call__=_paths_call(classname)))()) for classname in shapes_]
+
+        _ = [setattr(shapes, classname, type(classname, (), dict(
+            __call__=_shapes_call(classname)))()) for classname in shapes_]
+
 
 # window.glowscript = window.glowscript
 class primitive:

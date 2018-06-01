@@ -1,28 +1,29 @@
-from browser import document, window
-
-GLOWSCRIPT = window.glowscript
-
-from .primitive import box, arrow, cone, curve, pyramid, helix, cylinder, ellipsoid
-from .primitive import sphere, ring, attach_trail, compound, extrusion, text
+from browser import document, window, html
+from .primitive import box, arrow, cone, curve, pyramid, helix, cylinder, ellipsoid, ShapeInit
+from .primitive import sphere, ring, attach_trail, compound, extrusion, text, shapes, paths
 from .utils import create_script_tag
 from .vector import vec
-import os
 
-project_stdlib = "../stlib/"  # os.path.dirname("../stdlib{}/".format(os.path.abspath(__file__)))
+GLOWID = '_glow_'
 
 version = "2.7"
 
-create_script_tag(project_stdlib + 'glow.2.7.min.js')
+create_script_tag('../stlib/glow.2.7.min.js')
 
 
 class Glow:
     def __init__(self, container):
-        self._id = document.get(id=container)[0]
-        setattr(self._id, 'id', '')
+        glowid = GLOWID+container
+        if glowid in document:
+            document[container].remove()
+        document[container] <= html.DIV(Id=glowid, Class="glowscript")
+        self._id = document.get(id=glowid)[0]
+        # setattr(self._id, 'id', '')
 
         setattr(window, '__context', {})
         setattr(getattr(window, '__context'), 'glowscript_container',
                 self._id.elt)
+        ShapeInit()
 
 
 # todo, make canvas its own class

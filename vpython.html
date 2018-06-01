@@ -42,6 +42,15 @@
             php = [sphere(pos=(x/2+2.5, 0.15, -0.9), size=(0.3,0.3,0.3), **silv) for x in range(4)]
             pts = [h1, h2, aft, fr, body, caft, cfor, cbody]+per+php+phs
             sup = compound(pts, pos=(-1,0,0))
+            def sail():
+                rate(0.1, sail)
+                sup.pos += vec(-1,0,0)
+
+            print(shapes)
+            print(shapes.rectangle)
+            shapes.rectangle(width=10, height=5)
+
+            sail()
 
     </script>
 
