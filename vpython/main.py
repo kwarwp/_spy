@@ -9,7 +9,7 @@ project_stdlib = "../stlib/"  # os.path.dirname("../stdlib{}/".format(os.path.ab
 
 version = "2.7"
 
-create_script_tag('/js/glow.2.7.min.js')
+# create_script_tag('/js/glow.2.7.min.js')
 
 
 class Glow:
