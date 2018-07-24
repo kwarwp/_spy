@@ -501,7 +501,7 @@ class Codigo(Elemento):
         self._area = html.PRE(self._code, Class="python", style=dict(
             position='relative', top=0, left=0, backgroundColor='transparent'))
         self.elt <= self._area
-        codigo = window.hljs.highlight("python", codigo)
+        codigo = win.hljs.highlight("python", codigo)
         def rp(cod, keys=PKEYS[:], mark='<span class="hljs-keyword">{}</span>'):
             key = keys.pop()
             cod = cod.replace(key, mark.format(key))
