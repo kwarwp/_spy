@@ -465,6 +465,52 @@ class Elemento:
                 for nome, img in kwargs.items()]
 
 
+class Codigo(Elemento):
+    """
+    Um objeto de interação que é representado por uma trecho de código em uma cena.
+            exemplo = Codigo(
+             codigo="from anna import main", topo="Importando um módulo",
+             vai=testa_codigo, style=dict(left=350, top=550, width=60))
+    :param codigo: O código de programa
+    :param vai: função executada quando se clica no objeto
+    :param style: dicionário com dimensões do objeto {"left": ..., "top": ..., width: ..., height: ...}
+    :param topo: Texto que aparece no topo do bloco
+    :param cena: cena onde o objeto vai ser colocado
+    """
+    def __init__(self, codigo="", topo="", cena=INVENTARIO, img="", vai=None, style=NS):
+        self.img = img
+        self.vai = vai if vai else lambda _=0: None
+        self.cena = cena
+        self.opacity = 0
+        self.style = dict(**PSTYLE)
+        # self.style["min-width"], self.style["min-height"] = w, h
+        self.style.update(backgroundColor='rgba(210, 220, 220, 0.85)', **style)
+        self.elt = html.DIV(style=self.style)
+        self.xy = (-111, -111)
+        istyle = dict(EIMGSTY)
+        istyle.update(opacity=0.3)
+        if img:
+            self.img = html.IMG(src=img, style=istyle)
+            self.elt <= self.img
+        if topo:
+            self.topo = html.DIV(topo, color="black", style=dict(padding="15px"))
+            self.elt <= self.topo
+        self.elt.onclick = self._click
+        self.scorer = dict(ponto=1, valor=cena.nome, carta=img, casa=self.xy, move=None)
+        self._code = html.CODE(codigo)
+        self._area = html.PRE(self._code, Class="python", style=dict(
+            position='relative', top=0, left=0, backgroundColor='transparent'))
+        self.elt <= self._area
+        codigo = window.hljs.highlight("python", codigo)
+        def rp(cod, keys=PKEYS[:], mark='<span class="hljs-keyword">{}</span>'):
+            key = keys.pop()
+            cod = cod.replace(key, mark.format(key))
+            return rp(cod, keys, mark) if keys else cod
+        # codigo = rp(codigo)
+        self._code.html = codigo.value
+        _ = self.entra(cena) if cena and (cena != INVENTARIO) else None
+
+      
 class Portal:
     N = NSTYLE
     L = LSTYLE
@@ -589,6 +635,27 @@ class Labirinto:
 
     @staticmethod
     def m(cenas):
+        def valid(cns, jj, ii, m, n):
+            return 0 <= jj + m < len(cns) and 0 <= ii + n < len(cns[jj + m]) and cns[jj + m][ii + n]
+
+        def vizinhos(jj, ii, cns=cenas):
+            return [(kk, cns[jj + m][ii + n]) for kk, (m, n) in enumerate(CART) if valid(cns, jj, ii, m, n)]
+
+        for j, linha in enumerate(cenas):
+            if isinstance(linha, list):
+                for i, centro in enumerate(linha):
+                    if not isinstance(centro, Sala):
+                        continue
+                    for k, sala in vizinhos(j, i):
+                        if not isinstance(sala, Sala):
+                            continue
+                        centro.cenas[k].meio = sala.cenas[k]
+                        indice_oposto = (k + 2) % 4
+                        sala.cenas[indice_oposto].meio = centro.cenas[indice_oposto]
+
+
+    @staticmethod
+    def n(cenas):
         def valid(cns, jj, ii, m, n):
             return 0 <= jj + m < len(cns) and 0 <= ii + n < len(cns[jj + m]) and cns[jj + m][ii + n]
 
