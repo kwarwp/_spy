@@ -74,6 +74,9 @@ OSTYLE = {'position': "absolute", 'width': "10%", 'left': 0, 'top': "20%", 'marg
           "min-height": "60%", "cursor": "w-resize"}
 ZSTYLE = {'position': "absolute", 'width': "10%", 'margin': "0%",
           "min-height": "10%", "cursor": "zoom-in"}
+PKEYS = ['False', 'None', 'True', ' and ', ' as ', 'assert', 'break', 'class ', 'continue', 'def ',
+         'del', 'elif', 'else', 'except', 'finally', 'for ', 'from ', 'global ', 'if ', 'import ',
+         ' in ', ' is ', 'lambda', 'nonlocal', ' not ', ' or ', 'pass', 'raise', 'return', 'try', 'while', 'with', 'yield']
 
 
 class _PATTERN:
