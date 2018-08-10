@@ -496,7 +496,8 @@ class Codigo(Elemento):
             self.img = html.IMG(src=img, style=istyle)
             self.elt <= self.img
         if topo:
-            self.topo = html.DIV(topo, color="black", style=dict(padding="15px"))
+            self.topo = html.DIV(color="black", style=dict(padding="15px"))
+            self.topo.html = topo
             self.elt <= self.topo
         self.elt.onclick = self._click
         self.scorer = dict(ponto=1, valor=cena.nome, carta=img, casa=self.xy, move=None)
@@ -505,6 +506,7 @@ class Codigo(Elemento):
             position='relative', top=0, left=0, backgroundColor='transparent'))
         self.elt <= self._area
         codigo = win.hljs.highlight("python", codigo)
+
         def rp(cod, keys=PKEYS[:], mark='<span class="hljs-keyword">{}</span>'):
             key = keys.pop()
             cod = cod.replace(key, mark.format(key))
@@ -631,10 +633,13 @@ class Labirinto:
     def __init__(self, c=NADA, n=NADA, l=NADA, s=NADA, o=NADA):
         self.salas = [sala for sala in [c, n, l, s, o]]
         self.centro, self.norte, self.leste, self.sul, self.oeste = self.salas
+        self.lb()
+
+    def lb(self):
         for indice, sala in enumerate(self.salas[1:]):
-            self.centro.cenas[indice].portal(N=sala.cenas[indice])
+            self.centro.cenas[indice].portal(N=sala.cenas[indice]) if sala else None
             indice_oposto = (indice + 2) % 4
-            sala.cenas[indice_oposto].portal(N=self.centro.cenas[indice_oposto])
+            sala.cenas[indice_oposto].portal(N=self.centro.cenas[indice_oposto]) if sala else None
 
     @staticmethod
     def m(cenas):
