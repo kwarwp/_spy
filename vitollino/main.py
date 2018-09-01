@@ -767,7 +767,8 @@ class Cena:
         self.N, self.O, self.L = [NADA] * 3
         self.vai = vai or self.vai
         self.elt = html.DIV(style=STYLE)
-        self.elt <= html.IMG(src=self.img, width=width, style=STYLE, title=nome)
+        self.img = html.IMG(src=self.img, width=width, style=STYLE, title=nome)
+        self.elt <= self.img
         Cena.c(**kwargs)
 
         self._cria_divs(width)
