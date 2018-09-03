@@ -443,6 +443,12 @@ class Elemento:
     def _auto_score(self, **kwargs):
         pass
 
+    def __le__(self, other):
+        if hasattr(other, 'elt'):
+            self.elt <= other.elt
+        else:
+            self.elt <= other
+
     def _click(self, ev=NoEv()):
         self.xy = (ev.x, ev.y)
         ev.stopPropagation()
