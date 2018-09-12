@@ -170,6 +170,14 @@ class Gui:
         Cena(SPLASH).vai()
 
     @classmethod
+    def admite(cls, carta):
+        cls._cenario.admite(carta)
+
+    @classmethod
+    def apresenta(cls, carta):
+        cls._cenario.apresenta(carta)
+
+    @classmethod
     def fases(cls, indice):
         cls._cenario.reface(*(cls._fases[indice]))
         return cls._cenario
