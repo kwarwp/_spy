@@ -126,6 +126,8 @@ class Cenario(Cena):
         self.labirinto = Elemento("", style=dict(left=0, top=140, width=800, height="400px"))
         self.acampamento.nome = "Acampa"
         self.labirinto.nome = "Explora"
+        self.acampamento.entra(self)
+        self.labirinto.entra(self)
 
         self.img.style.marginLeft = "-{}px".format(index * w)
         self.img.style.width = self.img.style.maxWidth = "{}px".format(delta)
@@ -155,7 +157,7 @@ class Gui:
 
     @classmethod
     def carta(cls, face, tit=None):
-        return Sprite(SPRITES["t{}".format(face) if face.isdigit() else face], index=0, tit=tit)
+        return Sprite(*SPRITES["t{}".format(face) if face.isdigit() else face])
 
     @classmethod
     def clear_interval(cls, interval):
@@ -184,7 +186,7 @@ class Gui:
 
     @classmethod
     def set_interval(cls, turno, param):
-        return timer.set_interval(cls, turno, param)
+        return timer.set_interval(turno, param)
 
 
 def main(jogadores=JOGADORES, gui=None):
