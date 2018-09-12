@@ -163,7 +163,7 @@ class Gui:
 
     @classmethod
     def set_timeout(cls, rodada, param):
-        timer.set_timeout(cls, rodada, param)
+        timer.set_timeout(rodada, param)
 
     @classmethod
     def splash(cls):
