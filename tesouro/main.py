@@ -207,11 +207,10 @@ def main(jogadores=JOGADORES, gui=GUI):
             _chance = list(range(20))
             shuffle(_chance)
             self.joga, self.jogadas, self.nome = joga, _chance, nome
-            gui.inicia()
             self._inicia(nome)
 
         def _inicia(self, jogador):
-            get_joga = "from {mod}.main import {mod}; self.joga = {mod}()"
+            get_joga = "from {mod}.main import {mod}; self.joga = {mod}().joga"
             try:
                 exec(get_joga.format(mod=jogador))
                 self.nome = self.nome.upper()
@@ -220,8 +219,10 @@ def main(jogadores=JOGADORES, gui=GUI):
 
         def _joga(self, _):
             return self.jogadas.pop() < 2
-
+            
+    gui.inicia()
     return Jogo(gui=gui, jogadores=[JogadorSimples(None, jogador) for jogador in jogadores])
+
 
 
 if __name__ == '__main__':
