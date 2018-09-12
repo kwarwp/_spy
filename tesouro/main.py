@@ -190,7 +190,10 @@ class Gui:
         return timer.set_interval(turno, param)
 
 
-def main(jogadores=JOGADORES, gui=None):
+GUI = Gui()
+
+
+def main(jogadores=JOGADORES, gui=GUI):
     class JogadorSimples:
         def __init__(self, joga, nome):
             _chance = list(range(20))
@@ -212,7 +215,5 @@ def main(jogadores=JOGADORES, gui=None):
     return Jogo(gui=gui, jogadores=[JogadorSimples(None, jogador) for jogador in jogadores])
 
 
-GUI = Gui()
-
 if __name__ == '__main__':
-    main(gui=GUI).inicia()
+    main().inicia()
