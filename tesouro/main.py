@@ -24,7 +24,7 @@ from random import shuffle
 
 from browser import timer
 
-from tesouro import Jogo
+from _spy.tesouro.tesouro import Jogo
 from _spy.vitollino.main import Elemento, Cena, Codigo, STYLE
 
 # from _spy.vitollino.main import Elemento, Cena, Codigo, STYLE
