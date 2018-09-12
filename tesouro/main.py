@@ -138,6 +138,7 @@ class Cenario(Cena):
         self.img.src = img
         self.img.style.marginLeft = "-{}px".format(index * self.w)
         self.img.style.width = self.img.style.maxWidth = "{}px".format(delta)
+        self.labirinto.elt.html = ""
 
     def face(self, index):
         self.img.style.marginLeft = "-{}px".format(index * self.w)
@@ -157,7 +158,7 @@ class Gui:
 
     @classmethod
     def carta(cls, face, tit=None):
-        return Sprite(*SPRITES["t{}".format(face) if face.isdigit() else face])
+        return Sprite(**SPRITES["t{}".format(face) if face.isdigit() else face])
 
     @classmethod
     def clear_interval(cls, interval):
