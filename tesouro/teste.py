@@ -72,11 +72,31 @@ class TesteTesouro(TestCase):
         # self.jogo = Jogo(gui=self.gui)
 
     def test_turno(self):
+        mesa = self.jogo.mesa
+        self.jogo.mesa.baralho.cartas = [Tesouro(face=TESOUROS[0])]*5
+        self._cria_jogo((([0, 0, 0, 0, 0, 0], "pega_tesouro"), ))
+        self.jogo.mesa.rodada()
+        self._test_turno()
+        self.assertEqual((0, 0, 0, 0, 0, 0, 0, [], [], [], [], []), mesa.atualiza(), mesa.atualiza())
+        self.jogo.mesa.rodada()
+        self.assertEqual((0, 0, 0, 0, 0, 0, 0, [], [], [], [], []), mesa.atualiza(), mesa.atualiza())
+        self._test_turno()
+        self.assertEqual((0, 0, 0, 0, 0, 0, 0, [], [], [], [], []), mesa.atualiza(), mesa.atualiza())
+        self.jogo.mesa.rodada()
+        self._test_turno()
+        self.assertEqual((0, 0, 0, 0, 0, 0, 0, [], [], [], [], []), mesa.atualiza(), mesa.atualiza())
+        self.jogo.mesa.rodada()
+        self._test_turno()
+        self.assertEqual((0, 0, 0, 0, 0, 0, 0, [], [], [], [], []), mesa.atualiza(), mesa.atualiza())
+
+    def _test_turno(self):
         self.jogo.mesa.turno()
-        # self.gui.set_interval.assert_called_once()
-        # assert 30 == self.gui.sprite.mostra.call_count, self.gui.sprite.mostra.call_count
         self.gui.mesa.apresenta.assert_called_once()
-        # self.gui.set_timeout.assert_called_once()
+        self.gui.mesa.apresenta.reset_mock()
+        self.gui.set_timeout.assert_called_once()
+        self.gui.set_timeout.reset_mock()
+        self.gui.set_interval.assert_called_once()
+        self.gui.set_interval.reset_mock()
 
     def test_tesouro(self):
         self._cria_jogo((([0], "pega_tesouro"), ))
