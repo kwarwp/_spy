@@ -84,7 +84,7 @@ class TesteTesouro(TestCase):
         mesa.baralho.cartas = []
         mesa.baralho.cartas.append(Tesouro(face=TESOUROS[0]))
         mesa.turno()
-        self.assertEqual((0, 0, 1, 0, 0, 0, 1, [0], ['1'], [1], [0], [0]), mesa.atualiza(), mesa.atualiza())
+        self.assertEqual((0, 0, 1, 1, 0, 0, 1, [0], ['1'], [1], [0], [0]), mesa.atualiza(), mesa.atualiza())
         sai = self.jogo.mesa.jogadores_saindo
         ativos = self.jogo.mesa.jogadores_ativos
         self.assertEqual(1, len(sai), "Saindo = {}".format(sai))
@@ -199,6 +199,7 @@ class TesteTesouro(TestCase):
         self.jogo.mesa.baralho.cartas.append(Artefato(face=ARTEFATOS[4]))
         self.jogo.mesa.baralho.cartas.append(Tesouro(face=TESOUROS[4]))
         self.jogo.mesa.turno()
+        self.gui.sprite.mostra.assert_called_with(":1:")
         self.jogo.mesa.turno()
         sai = self.jogo.mesa.jogadores_saindo
         ativos = self.jogo.mesa.jogadores_ativos
@@ -209,6 +210,7 @@ class TesteTesouro(TestCase):
         self.assertEqual(0, sai[0].joias, "Tesouro = {}".format(sai[0].joias))
         self.assertEqual(2, ativos[0].joias, "Tesouro = {}".format(ativos[0].joias))
         self.assertEqual(0, self.jogo.mesa.salas[0].valor, "Tesouro = {}".format(self.jogo.mesa.salas[0].valor))
+        self.gui.sprite.mostra.assert_called_with(":0:")
 
     def test_divide_tesouro(self):
         self._cria_jogo([([0], "pega_tesouro1"), ([0], "pega_tesouro2")])
@@ -255,7 +257,7 @@ class TesteTesouro(TestCase):
         self.assertEqual(0, ativos[0].tesouro, "Tesouro = {}".format(ativos[0].tesouro))
         self.assertEqual(0, ativos[0].joias, "Tesouro = {}".format(ativos[0].joias))
         self.assertEqual(1, self.jogo.mesa.salas[0].valor, "Tesouro = {}".format(self.jogo.mesa.salas[0].valor))
-        # self.gui.sprite.mostra.assert_called_with(":10:")
+        self.gui.sprite.mostra.assert_called_with(":1:")
         self.gui.mesa.apresenta.assert_called_once()
         # self.gui.set_timeout.assert_called_once()
 
@@ -272,7 +274,7 @@ class TesteTesouro(TestCase):
         self.assertEqual(1, ativos[0].joias, "Tesouro = {}".format(ativos[0].joias))
         self.assertEqual(1, ativos[1].joias, "Tesouro = {}".format(ativos[1].joias))
         self.assertEqual(0, self.jogo.mesa.salas[0].valor, "Tesouro = {}".format(self.jogo.mesa.salas[0].valor))
-        # self.gui.sprite.mostra.assert_called_with(":10:")
+        self.gui.sprite.mostra.assert_called_with(":0:")
         self.gui.mesa.apresenta.assert_called_once()
         # self.gui.set_timeout.assert_called_once()
 
@@ -289,7 +291,7 @@ class TesteTesouro(TestCase):
         self.assertEqual(1, ativos[0].joias, "Tesouro = {}".format(ativos[0].joias))
         self.assertEqual(1, ativos[1].joias, "Tesouro = {}".format(ativos[1].joias))
         self.assertEqual(1, self.jogo.mesa.salas[0].valor, "Tesouro = {}".format(self.jogo.mesa.salas[0].valor))
-        # self.gui.sprite.mostra.assert_called_with(":10:")
+        self.gui.sprite.mostra.assert_called_with(":1:")
         self.gui.mesa.apresenta.assert_called_once()
         # self.gui.set_timeout.assert_called_once()
 
