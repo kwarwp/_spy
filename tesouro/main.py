@@ -155,7 +155,7 @@ class Gui:
 
     @classmethod
     def carta(cls, face, tit=None):
-        return Sprite(SPRITES[face], index=0, tit=tit)
+        return Sprite(SPRITES["t{}".format(face) if face.isdigit() else face], index=0, tit=tit)
 
     @classmethod
     def clear_interval(cls, interval):
