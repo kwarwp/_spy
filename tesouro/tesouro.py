@@ -312,7 +312,7 @@ class Mesa(object):
         if (not carta_corrente) or (carta_corrente.termina(self.salas)):
             self.mesa.apresenta(carta_corrente)
             Jogo.GUI.clear_interval(self.interval)
-            if self.rodada_corrente < 5:
+            if self.rodada_corrente <= 5:
                 self.rodada_corrente += 1
                 Jogo.GUI.set_timeout(self.rodada, 2000)
             return False
@@ -330,7 +330,7 @@ class Mesa(object):
         carta_corrente.divide(self.jogadores_saindo, self.salas)
         if not self.jogadores_ativos:
             Jogo.GUI.clear_interval(self.interval)
-            if self.rodada_corrente < 5:
+            if self.rodada_corrente <= 5:
                 self.rodada_corrente += 1
                 Jogo.GUI.set_timeout(self.rodada, 2000)
 
