@@ -73,7 +73,7 @@ class Carta(object):
             return True
         for jogador in jogadores:
             jogador.recebe(0, sala.valor // divider)
-        sala.valor %= divider
+        sala.atualiza_saldo(divider)
         return True
 
     def entra(self, cena):
@@ -174,13 +174,12 @@ class Baralho(object):
 
 class Jogador(object):
 
-    def __init__(self, mesa, jogador, chance=None):
+    def __init__(self, mesa, jogador):
         """
             Representa um explorador, que pode ser um participante ou um NPC.
 
         :param jogador: módulo que contém a IA deste jogador.
         :param mesa: a mesa em que o jogador acampa.
-        :param chance: Roleta para a criação de um IA aleatório.
         """
         self.sprite = Jogo.GUI.carta('decide', tit=jogador)
         self.tesouro = 0
@@ -302,7 +301,6 @@ class Mesa(object):
         self.baralho.embaralha(artefato)
         self.perigo = self.salas = []
         self.interval = Jogo.GUI.set_interval(self.turno, 500)
-        self.rodada_corrente += 1
         return
 
     def apresenta(self, carta):
@@ -315,6 +313,7 @@ class Mesa(object):
             self.mesa.apresenta(carta_corrente)
             Jogo.GUI.clear_interval(self.interval)
             if self.rodada_corrente < 5:
+                self.rodada_corrente += 1
                 Jogo.GUI.set_timeout(self.rodada, 2000)
             return False
         self.jogadores_saindo = []
@@ -332,6 +331,7 @@ class Mesa(object):
         if not self.jogadores_ativos:
             Jogo.GUI.clear_interval(self.interval)
             if self.rodada_corrente < 5:
+                self.rodada_corrente += 1
                 Jogo.GUI.set_timeout(self.rodada, 2000)
 
 
