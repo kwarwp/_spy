@@ -155,7 +155,7 @@ class Gui:
 
     @classmethod
     def carta(cls, face, tit=None):
-        return Sprite(IMGS[face], index=0, tit=tit)
+        return Sprite(SPRITES[face], index=0, tit=tit)
 
     @classmethod
     def clear_interval(cls, interval):
@@ -200,7 +200,7 @@ def main(jogadores=JOGADORES, gui=None):
             try:
                 exec(get_joga.format(mod=jogador))
                 self.nome = self.nome.upper()
-            except (ModuleNotFoundError, TypeError):
+            except (ImportError, TypeError):
                 self.joga = self._joga
 
         def _joga(self, _):
