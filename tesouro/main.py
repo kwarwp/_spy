@@ -140,6 +140,10 @@ class Cenario(Cena):
         self.img.style.width = self.img.style.maxWidth = "{}px".format(delta)
         self.labirinto.elt.html = ""
 
+    def inicia(self):
+        self.labirinto.elt.html = ""
+        self.acampamento.elt.html = ""
+
     def face(self, index):
         self.img.style.marginLeft = "-{}px".format(index * self.w)
 
@@ -173,6 +177,10 @@ class Gui:
         Cena(SPLASH).vai()
 
     @classmethod
+    def inicia(cls):
+        cls._cenario.inicia()
+
+    @classmethod
     def admite(cls, carta):
         cls._cenario.admite(carta)
 
@@ -199,6 +207,7 @@ def main(jogadores=JOGADORES, gui=GUI):
             _chance = list(range(20))
             shuffle(_chance)
             self.joga, self.jogadas, self.nome = joga, _chance, nome
+            gui.inicia()
             self._inicia(nome)
 
         def _inicia(self, jogador):
