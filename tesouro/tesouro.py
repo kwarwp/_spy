@@ -60,7 +60,7 @@ class Carta(object):
         return True
 
     def atualiza_saldo(self, divider):
-        self.valor %= divider
+        self.valor = (self.valor % divider) if divider else self.valor
         self.mostra()
 
     def divide(self, jogadores, salas):
@@ -237,7 +237,8 @@ class Mesa(object):
         self.admite = Jogo.GUI.admite
         self.mesa = self.fases(self.rodada_corrente)
         self.baralho = Baralho()
-        self.jogadores_ativos = self.jogadores = [Jogador(self, jogador) for jogador in jogadores]
+        self.jogadores = [Jogador(self, jogador) for jogador in jogadores]
+        self.jogadores_ativos = self.jogadores[:]
         self.jogadores_saindo = []
         self.perigo = self.salas = []
         self.perigos = self.artefatos = self.cartas = self.rodadas = self.jogadores_jogando = 0
@@ -267,10 +268,11 @@ class Mesa(object):
 
         self.perigos = sum(1 for carta in self.salas if isinstance(carta, Perigo))
         self.artefatos = sum(1 for carta in self.salas if isinstance(carta, Artefato))
-        self.tesouros_jogadores = [jogador.tesouro for jogador in self.jogadores_ativos]
+        self.tesouros_jogadores = [jogador.tesouro for jogador in self.jogadores]
         self.joias_jogadores = [jogador.joias for jogador in self.jogadores_ativos]
         self.tesouros_na_tenda = [jogador.tesouro for jogador in self.jogadores]
-        self.maior_tesouro, self.maior_joias = max(self.tesouros_na_tenda), max(self.joias_jogadores)
+        self.maior_tesouro = max(self.tesouros_na_tenda) if self.tesouros_na_tenda else 0
+        self.maior_joias = max(self.joias_jogadores) if self.joias_jogadores else 0
         self.cartas, self.jogadores_jogando = len(self.salas), len(self.jogadores_ativos)
         self.tesouros_na_mesa = [carta.valor for carta in self.salas]
         self.cartas_na_mesa = [carta.face[:2] for carta in self.salas]
