@@ -100,6 +100,7 @@ class TesteTesouro(TestCase):
         self.jogo.mesa.baralho.cartas = [Tesouro(face=TESOUROS[0])]
         mesa.turno()
         self.assertEqual((0, 0, 1, 5, 4, 0, 1, [4], ['1'], [1], [4], [0]), mesa.atualiza(), mesa.atualiza())
+        mesa.rodada()
 
     def _test_turno(self):
         self.jogo.mesa.turno()

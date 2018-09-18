@@ -294,6 +294,8 @@ class Mesa(object):
             self.rodada()
 
     def rodada(self):
+        if len(ARTEFATOS) <= self.rodada_corrente:
+            return
         artefato = ARTEFATOS[self.rodada_corrente]
         self.mesa = self.fases(self.rodada_corrente)  # )
         self.mesa.vai()
