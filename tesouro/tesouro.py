@@ -255,7 +255,7 @@ class Mesa(object):
                 self.jogadas, self.nome = _chance, nome
 
             def joga(self, _):
-                return self.jogadas.pop() < 2
+                return (self.jogadas.pop() < 2) if self.jogadas else True
 
         return [JogadorSimples(*jogador) for jogador in jogadores]
 

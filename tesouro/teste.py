@@ -77,6 +77,7 @@ class TesteTesouro(TestCase):
         self.jogo.mesa.baralho.cartas = [Tesouro(face=TESOUROS[0])]
         # self.jogo.mesa.baralho.cartas = [Tesouro(face=TESOUROS[i]) for i in range(5)]
         self.jogo.mesa.rodada()
+        self.assertIn(Artefato("estatua"), self.jogo.mesa.baralho.cartas)
         # self._test_turno()
         self.jogo.mesa.baralho.cartas = [Tesouro(face=TESOUROS[0])]
         mesa.turno()
@@ -84,19 +85,23 @@ class TesteTesouro(TestCase):
         #                 pe,ar,ca,ro,>t,>j,jg,tnd,crt,tnm,tsj,jsj
         self.assertEqual((0, 0, 1, 1, 0, 0, 1, [0], ['1'], [1], [0], [0]), mesa.atualiza(), mesa.atualiza())
         self.jogo.mesa.rodada()
-        self.jogo.mesa.salas =[]
+        self.assertIn(Artefato(ARTEFATOS[1]), self.jogo.mesa.baralho.cartas)
+        self.jogo.mesa.salas = []
         self.jogo.mesa.baralho.cartas = [Tesouro(face=TESOUROS[0])]
         mesa.turno()
         self.assertEqual((0, 0, 1, 2, 1, 0, 1, [1], ['1'], [1], [1], [0]), mesa.atualiza(), mesa.atualiza())
         self.jogo.mesa.rodada()
+        self.assertIn(Artefato(ARTEFATOS[2]), self.jogo.mesa.baralho.cartas)
         self.jogo.mesa.baralho.cartas = [Tesouro(face=TESOUROS[0])]
         mesa.turno()
         self.assertEqual((0, 0, 1, 3, 2, 0, 1, [2], ['1'], [1], [2], [0]), mesa.atualiza(), mesa.atualiza())
         self.jogo.mesa.rodada()
+        self.assertIn(Artefato(ARTEFATOS[3]), self.jogo.mesa.baralho.cartas)
         self.jogo.mesa.baralho.cartas = [Tesouro(face=TESOUROS[0])]
         mesa.turno()
         self.assertEqual((0, 0, 1, 4, 3, 0, 1, [3], ['1'], [1], [3], [0]), mesa.atualiza(), mesa.atualiza())
         self.jogo.mesa.rodada()
+        self.assertIn(Artefato(ARTEFATOS[4]), self.jogo.mesa.baralho.cartas)
         self.jogo.mesa.baralho.cartas = [Tesouro(face=TESOUROS[0])]
         mesa.turno()
         self.assertEqual((0, 0, 1, 5, 4, 0, 1, [4], ['1'], [1], [4], [0]), mesa.atualiza(), mesa.atualiza())
