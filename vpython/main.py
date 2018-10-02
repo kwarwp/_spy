@@ -28,7 +28,7 @@ class Glow:
 
 # todo, make canvas its own class
 def canvas(width=600, height=400, background=window.glowscript.color.black):
-    return window.glowscript.canvas(width=width, height=height, background=background)
+    return window.glowscript.canvas({width=width, height=height, background=background})
 
 
 def rate(t, func):
