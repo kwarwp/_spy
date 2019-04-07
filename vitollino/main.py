@@ -723,7 +723,7 @@ class Sala:
     @staticmethod
     def c(**cenas):
         for nome, cena in cenas.items():
-            setattr(Sala, nome, Sala(*cena, nome=nome))
+            setattr(Sala, nome, Sala(nome=nome, **cena))
 
 
 class Salao(Sala):
@@ -737,7 +737,7 @@ class Salao(Sala):
     @staticmethod
     def c(**cenas):
         for nome, cena in cenas.items():
-            setattr(Salao, nome, Salao(*cena, nome=nome))
+            setattr(Salao, nome, Salao(nome=nome, **cena))
 
 
 class Cena:
