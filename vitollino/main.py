@@ -1399,6 +1399,7 @@ class Bloco:
 class Jogo:
     def __init__(self):
         self.c = Cena
+        self.d = self.codigo = Codigo
         self.q = Sala
         self.salao = self.s = Salao
         self.a = Elemento
