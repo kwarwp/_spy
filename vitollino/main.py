@@ -436,8 +436,8 @@ class Elemento:
             self.elt <= self.img
         self.elt.onclick = self._click
         self.c(**kwargs)
-        _ = Dragger(self.elt) if drag else None
-        _ = Droppable(self.elt, drop, self.vai) if drop else None
+        # _ = Dragger(self.elt) if drag else None
+        # _ = Droppable(self.elt, drop, self.vai) if drop else None
         _ = self.entra(cena) if cena and (cena != INVENTARIO) else None
 
     def _auto_score(self, **kwargs):
@@ -1411,6 +1411,9 @@ class Jogo:
         self.dropper = self.d = Dropper
         self.droppable = self.r = Droppable
         self.musica = self.m = Musica
+        self.codigo = Codigo
+        self.document = document
+        self.html = html
         pass
 
     @property
