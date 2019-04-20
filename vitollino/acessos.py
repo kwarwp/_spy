@@ -3,7 +3,8 @@ from os.path import join
 from matplotlib import pyplot as plt
 import datetime as dt
 import numpy as np
-ROOT = "/home/carlo/Documentos/doc/shuttle/_access_"
+# ROOT = "/home/carlo/Documentos/doc/shuttle/_access_"
+ROOT = "/home/carlo/Documentos/doc/shuttle/_accessfono_"
 
 
 class Access:
@@ -26,17 +27,21 @@ class Access:
                           for date, count in self.log_count.items()]
         self.log_pairs.sort()
         print(self.log_pairs)
+
+    def splot(self):
+        now = dt.date(2018, 8, 22)
         y = [b for _, b in self.log_pairs]
-        # pyplot.plot(y)
-        # pyplot.show()
+        days = [now + dt.timedelta(days=x) for x in np.arange(0, len(y), 1.)]
+        plt.plot(days, y)
+        plt.show()
 
     def plot(self):
         now = dt.datetime.now()
         days = [now + dt.timedelta(days=x) for x in np.arange(0, 30, 1 / 4.)]
         days_value = np.random.random(len(days))
 
-        fig, axs = plt.subplots(1)
-        fig.subplots_adjust(hspace=0.75)
+        fig, axs = plt.subplots()
+        # fig.subplots_adjust(hspace=0.75)
         axs.plot(days, days_value)
 
         for label in axs.get_xmajorticklabels() + axs.get_xmajorticklabels():
@@ -47,4 +52,4 @@ class Access:
 
 
 if __name__ == '__main__':
-    Access().plot()
+    Access().splot()

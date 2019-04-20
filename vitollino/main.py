@@ -36,7 +36,7 @@ Gerador de labirintos e jogos tipo *'novel'*.
 
 """
 import json
-from browser import document, html
+from browser import document, html, timer
 from browser import window as win
 from browser import ajax
 import uuid
@@ -1414,6 +1414,8 @@ class Jogo:
         self.codigo = Codigo
         self.document = document
         self.html = html
+        self.window = win
+        self.timer = timer
         pass
 
     @property
