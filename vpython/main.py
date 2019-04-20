@@ -1,11 +1,10 @@
 from browser import document, window, html
 from .primitive import box, arrow, cone, curve, pyramid, helix, cylinder, ellipsoid
-from .primitive import sphere, ring, attach_trail, compound, extrusion, text
-from .utils import create_script_tag
+from .primitive import sphere, ring, attach_trail, compound, extrusion, text, ShapeInit
 from .vector import vec
+from .utils import create_script_tag
 
 GLOWID = '_glow_'
-project_stdlib = "../stlib/"  # os.path.dirname("../stdlib{}/".format(os.path.abspath(__file__)))
 
 version = "2.7"
 
@@ -24,6 +23,7 @@ class Glow:
         setattr(window, '__context', {})
         setattr(getattr(window, '__context'), 'glowscript_container',
                 self._id.elt)
+        ShapeInit()
 
 
 # todo, make canvas its own class
