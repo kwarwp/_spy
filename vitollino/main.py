@@ -356,7 +356,7 @@ class Inventario:
             nome_item.entra(self)
             item_img = nome_item.elt
             item_img.style = ESTYLE
-        Dropper(item_img)
+        # Dropper(item_img)
         if acao:
             item_img.onclick = lambda *_: acao()
         else:
