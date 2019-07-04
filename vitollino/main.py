@@ -299,6 +299,7 @@ class Inventario:
         self.cena = None
         self.nome = "__INVENTARIO__"
         self.inventario = {}
+        self.item = {}
         self.opacity = 0
         self.style = dict(**ISTYLE)
         self.style["min-height"] = "30px"
@@ -356,6 +357,8 @@ class Inventario:
             nome_item.entra(self)
             item_img = nome_item.elt
             item_img.style = ESTYLE
+            nome = nome_item.tit or nome_item
+            self.item[nome] = nome_item
         # Dropper(item_img)
         if acao:
             item_img.onclick = lambda *_: acao()
@@ -366,7 +369,8 @@ class Inventario:
     def tira(self, nome_item):
         item_img = document[nome_item]
         self.limbo <= item_img
-        return self.inventario.pop(nome_item, None)
+        result = self.item.pop(nome_item) if nome_item in self.item else self.inventario.pop(nome_item, None)
+        return result
 
     def score(self, casa, carta, move, ponto, valor, _level=1):
         data = dict(doc_id=INVENTARIO.GID, carta=carta, casa=casa, move=move, ponto=ponto, valor=valor,
