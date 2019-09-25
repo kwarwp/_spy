@@ -5,3 +5,4 @@
 "soraya": {"author_nick": "carlo", "author_name": "Carlo Oliveira", "author_email": "carlo@nce.ufrj.br", "author_org": "LABASE", "author_site": "", "author_public": "on"},
 "henrietta": {"author_nick": "brunafiuza", "author_name": "Bruna Fiuza", "author_email": "brunafiuza@live.com", "author_org": "", "author_site": "", "author_public": "on"},
 "margaret": {"author_nick": "fonocomp1_19", "author_name": "FonoComp I 2019", "author_email": "carlo@nce.ufrj.br", "author_org": "UFRJ", "author_site": "http://labase.nce.ufrj.br", "author_public": "on"},
+"mary_shaw": {"author_nick": "POO PPGI 19.3", "author_name": "Labase - Disciplina de ProgramaÃ§Ã£o Orientada a Objetos - PPGI 2019-3", "author_email": "carlo@ufrj.br", "author_org": "LABASE", "author_site": "labase.nce.ufrj.br", "author_public": "on"},
