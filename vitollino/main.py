@@ -351,7 +351,7 @@ class Inventario:
         :param acao: ação associada com o item nomeado quando ele é clicado
         """
         if isinstance(nome_item, str):
-            item_img = html.IMG(Id=nome_item, src=item, width=30, style=EIMGSTY)
+            item_img = html.IMG(Id=nome_item, src=item, width=30, height="30px" style=ESTYLE)
             self.elt <= item_img
         else:
             nome_item.entra(self)
