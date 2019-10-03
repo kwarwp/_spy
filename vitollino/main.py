@@ -338,7 +338,7 @@ class Inventario:
         self.opacity = abs(self.opacity - 0.5)
         self.elt.style.opacity = self.opacity
 
-    def bota(self, nome_item, item="", acao=None):
+    def bota(self, nome_item, item="", drag=False, acao=None):
         """
         Os objetos que estão de posse do jogador.
 
@@ -350,10 +350,12 @@ class Inventario:
 
         :param nome_item: uma string com o nome do item, ele será criado e colocado no inventário
         :param item: URL da imagem do item nomeado por nome_item
+        :param drag: Se for True o objeto será arrastável
         :param acao: ação associada com o item nomeado quando ele é clicado
         """
         if isinstance(nome_item, str):
-            item_img = html.IMG(Id=nome_item, src=item, width=30, height="30px", style=ESTYLE)
+            #item_img = html.IMG(Id=nome_item, src=item, width=30, height="30px", style=ESTYLE)
+            item_elt = Elemrnto(item, tit=nome_item, w=30, height=30, drag=drag, style=ESTYLE)
             self.elt <= item_img
         else:
             nome_item.entra(self)
@@ -600,8 +602,26 @@ class Elemento(Elemento_):
         return self.elt.style
 
     @style.setter
-    def tit(self, texto):
+    def style_set(self, texto):
         self.elt.style = texto
+
+
+    @property
+    def drag(self):
+        return self.elt.draggable
+
+    @drag.setter
+    def drag_set(self, condition):
+        self.do_drag(condition)
+
+
+    @property
+    def drop(self):
+        return self.dropper
+
+    @drop.setter
+    def drop_set(self, texto):
+        self.dropper = texto
 
     def img_prevent(self, ev):
         ev.preventDefault()
@@ -649,7 +669,7 @@ class Elemento(Elemento_):
         ev.preventDefault()
         ev.stopPropagation()
         src_id = ev.data['text']
-        tit = doc[src_id].title
+        tit = document[src_id].title
         self.dropper.setdefault(tit, lambda *_: None)(ev, tit)
 
 class Codigo(Elemento):
