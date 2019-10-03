@@ -355,14 +355,13 @@ class Inventario:
         """
         if isinstance(nome_item, str):
             #item_img = html.IMG(Id=nome_item, src=item, width=30, height="30px", style=ESTYLE)
-            item_elt = Elemento(item, tit=nome_item, w=30, height=30, drag=drag, style=ESTYLE)
-            self.elt <= item_elt
-        else:
-            nome_item.entra(self)
-            item_img = nome_item.elt
-            item_img.style = ESTYLE
-            nome = nome_item.tit or nome_item
-            self.item[nome] = nome_item
+            nome_item = Elemento(item, tit=nome_item, w=30, height=30, drag=drag, style=ESTYLE)
+
+        nome_item.entra(self)
+        item_img = nome_item.elt
+        item_img.style = ESTYLE
+        nome = nome_item.tit or nome_item
+        self.item[nome] = nome_item
         # Dropper(item_img)
         if acao:
             item_img.onclick = lambda *_: acao()
