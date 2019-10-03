@@ -594,6 +594,15 @@ class Elemento(Elemento_):
     def tit(self, texto):
         self.elt.title = texto
 
+
+    @property
+    def style(self):
+        return self.elt.style
+
+    @style.setter
+    def tit(self, texto):
+        self.elt.style = texto
+
     def img_prevent(self, ev):
         ev.preventDefault()
         ev.stopPropagation()
