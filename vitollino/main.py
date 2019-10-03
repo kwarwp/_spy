@@ -355,7 +355,7 @@ class Inventario:
         """
         if isinstance(nome_item, str):
             #item_img = html.IMG(Id=nome_item, src=item, width=30, height="30px", style=ESTYLE)
-            item_elt = Elemrnto(item, tit=nome_item, w=30, height=30, drag=drag, style=ESTYLE)
+            item_elt = Elemento(item, tit=nome_item, w=30, height=30, drag=drag, style=ESTYLE)
             self.elt <= item_img
         else:
             nome_item.entra(self)
