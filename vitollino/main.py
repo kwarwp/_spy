@@ -483,7 +483,7 @@ class Elemento_:
 
 
 
-class Elemento(Element_):
+class Elemento(Elemento_):
     """
     Um objeto de interação que é representado por uma imagem em uma cena.
 
