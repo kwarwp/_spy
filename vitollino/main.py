@@ -77,6 +77,8 @@ ZSTYLE = {'position': "absolute", 'width': "10%", 'margin': "0%",
 PKEYS = ['False', 'None', 'True', ' and ', ' as ', 'assert', 'break', 'class ', 'continue', 'def ',
          'del', 'elif', 'else', 'except', 'finally', 'for ', 'from ', 'global ', 'if ', 'import ',
          ' in ', ' is ', 'lambda', 'nonlocal', ' not ', ' or ', 'pass', 'raise', 'return', 'try', 'while', 'with', 'yield']
+NDCT = {}
+FIX_COUNT = {}
 
 
 class _PATTERN:
@@ -482,6 +484,30 @@ class Elemento_:
 
 
 class Elemento(Element_):
+    """
+    Um objeto de interação que é representado por uma imagem em uma cena.
+
+            papel = Elemento(
+             img="papel.png", tit="caderno de notas",
+             vai=pega_papel, style=dict(left=350, top=550, width=60))
+
+
+    :param img: URL de uma imagem
+    :param vai: função executada quando se clica no objeto
+    :param style: dicionário com dimensões do objeto {"left": ..., "top": ..., width: ..., height: ...}
+    :param tit: Texto que aparece quando se passa o mouse sobre o objeto
+    :param alt: Texto para leitores de tela
+    :param x: Posição x, na horizontal a partir da esquerda do elemento na cena
+    :param y: Posição y, na vertical a partir do topo do elemento na cena
+    :param w: Largura em pixels do elemento na cena
+    :param h: Altura em pixels do elemento na cena
+    :param texto: Se fornecido, este texto vai aparecer quando se clica no elemento
+    :param cena: cena alternativa onde o objeto vai ser colocado
+    :param score: determina o score para este elemento
+    :param drag: Se o valor for True, o o elmento será arrastável, default Faslse
+    :param drop: recebe um dicionário {"a": ator} onde ator é uma função def ator(ev, nome} chamada quando "a" é arrastado cá
+    :param kwargs: lista de parametros nome=URL que geram elementos com este nome e a dada imagem
+    """
     _score = None
 
     def __init__(self, img="", vai=None, style=NDCT, tit="", alt="",
