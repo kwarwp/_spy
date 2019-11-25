@@ -1174,6 +1174,14 @@ class Texto(Popup):
         self.esconde = foi if foi else self.esconde
         #cena <= self
 
+    @property  
+    def foi(self):
+        return self.esconde
+
+    @foi.setter  
+    def foi(self, value):
+        self.esconde = value
+   
     def esconde(self, ev=NoEv()):
         ...
 
