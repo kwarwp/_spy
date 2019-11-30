@@ -11,3 +11,4 @@
 "anita": {"author_nick": "SupyGirls_D_Piza", "author_name": "SupyGirls D. Piza", "author_email": "hello@ub.br", "author_org": "LABASE", "author_site": "labase.nce.ufrj.br", "author_public": "on"},
 "karen": {"author_nick": "CDERJ_Hortência", "author_name": "CEDERJ Students oriented by Isabel Hortência", "author_email": "hortencia.garnica@nce.ufrj.br", "author_org": "CDERJ", "author_site": "https://www.cecierj.edu.br", "author_public": "on"},
 "irene": {"author_nick": "JAIE_2019", "author_name": "Oficina JAIE 2019", "author_email": "carlo@nce.ufrj.br", "author_org": "LABASE", "author_site": "labase.nce.ufrj.br", "author_public": "on"},
+"kathleen": {"author_nick": "ZENOBIO_2019", "author_name": "Genetica Zenóbio 2019", "author_email": "carlo@nce.ufrj.br", "author_org": "LABASE", "author_site": "labase.nce.ufrj.br", "author_public": "on"},
