@@ -432,6 +432,7 @@ class Elemento_:
         self.img = img
         self.vai = vai if vai else lambda _=0: None
         self.cena = cena
+        self.nome = tit
         self.opacity = 0
         self.style = dict(**PSTYLE)
         # self.style["min-width"], self.style["min-height"] = w, h
@@ -512,7 +513,7 @@ class Elemento(Elemento_):
     _score = None
 
     def __init__(self, img="", vai=None, style=NDCT, tit="", alt="",
-                 x=0, y=0, w=100, h=100, texto='',
+                 x=0, y=0, w=100, h=100, o=1, texto='',
                  cena=INVENTARIO, score=NDCT, drag=False, drop={}, tipo="100% 100%", **kwargs):
         self._auto_score = self.score if score else self._auto_score
         self.img, self.title, self.dropper, self.alt = img, tit, drop, alt
@@ -524,7 +525,7 @@ class Elemento(Elemento_):
         # height = style["height"] if "height" in style else style["maxHeight"] if "maxHeigth" in style else 100
         # height = height[:-2] if isinstance(height, str) and "px" in height else height
         self.style = dict(**PSTYLE)
-        self.style.update(**{'position': 'absolute', 'overflow': 'hidden',
+        self.style.update(**{'position': 'absolute', 'overflow': 'hidden', 'o': 1,
                              'left': x, 'top': y, 'width': '{}px'.format(w), 'height': '{}px'.format(h),
                              'background-image': 'url({})'.format(img),
                              'background-position': '{} {}'.format(0, 0),
@@ -586,6 +587,30 @@ class Elemento(Elemento_):
         clone_mic = Elemento(self.img, tit=self.title, drag=True, style=style, cena=INVENTARIO)
         clone_mic.entra(INVENTARIO)
         self._do_foi = lambda *_: None
+                         
+    @property
+    def o(self):
+        return int(self.elt.style.opacity)
+                         
+    @o.setter
+    def o(self, value):
+        self.elt.style.opacity = value
+                         
+    @property
+    def x(self):
+        return int(self.elt.style.left[:-2])
+                         
+    @x.setter
+    def x(self, value):
+        self.elt.style.left = value
+                         
+    @property
+    def y(self):
+        return int(self.elt.style.top[:-2])
+                         
+    @y.setter
+    def y(self, value):
+        self.elt.style.top = value
 
     @property
     def tit(self):
@@ -1083,6 +1108,7 @@ class Popup:
         self._vai = vai
         self.optar = {}
         Popup.__setup__()
+        Popup.inicia()
         if isinstance(cena, Cena):
             self.d(cena, tit, txt)
 
@@ -1102,19 +1128,24 @@ class Popup:
             def __init__(self, tela=DOC_PYDIV):
                 self.tela = tela
                 self.optou = ""
+                self.foi = None
                 self.popup = html.DIV(Id="__popup__", Class="overlay")
                 self.div = div = html.DIV(Class="popup")
                 self.tit = html.H2()
-                a = html.A("&times;", Class="close", href="#")
+                self.a = html.A("×", Class="close", href="#")
                 self.go = html.A(Id="txt_button", Class="button", href="#__popup__")
                 self.go.onclick = self._open
-                a.onclick = self._close
+                self.a.onclick = self._close
                 self.alt = html.DIV(Class="content")
                 self.popup <= div
                 self.popup.style = {"visibility": "hidden", "opacity": 0}
-                div <= self.tit
-                div <= a
-                div <= self.alt
+                self.inicia()
+            def inicia(self):
+                self.foi = lambda *_: None
+                self.div.html = ""
+                self.div <= self.tit
+                self.div <= self.a
+                self.div <= self.alt
 
             def __repr__(self):
                 return "<Popup>"
@@ -1131,12 +1162,15 @@ class Popup:
 
             def monta_optar(self, **kwargs):
                 def opcao(letra):
-                    self.optou = letra
+                    self.foi(letra)
+
+                def _close():
+                    self.popup.style = {"visibility": "hidden", "opacity": 0}
 
                 def opta(letra, texto):
                     div = html.DIV(Class="content")
                     optou = html.A(chr(ABOXED + ord(letra) - ord("A")), Class="option", href="#")
-                    optou.onclick = lambda *_: opcao(letra) or self._close()
+                    optou.onclick = lambda *_: _close() or opcao(letra)
                     texto_opcao = html.SPAN(texto)
                     div <= optou
                     div <= texto_opcao
@@ -1147,12 +1181,11 @@ class Popup:
                     self.div <= opta(*op)
 
             def mostra(self, act, tit="", txt="", **kwargs):
+                self.foi = act if act else self.foi
                 if tit or txt:
                     self.tit.text, self.alt.text = tit, txt
                 self.monta_optar(**kwargs)
-                # self.popup.style = {"visibility": "visible", "opacity": 0.7}
                 self._open()
-                act()
 
         Popup.POP = Pop()
         Popup.__setup__ = lambda: None
@@ -1165,14 +1198,17 @@ class Popup:
         cena.vai = lambda *_, **__: Popup.POP.mostra(act, tit, txt)
         return cena
 
+    @staticmethod
+    def inicia():
+        Popup.POP.inicia()
+
 
 class Texto(Popup):
     def __init__(self, cena=NADA, tit="", txt="", foi=None, **kwargs):
         super().__init__(None, tit=tit, txt=txt, vai=None, **kwargs)
-        #self.elt = Popup.POP.popup
         self.cena = cena
+        self.kwargs = kwargs
         self.esconde = foi if foi else self.esconde
-        #cena <= self
 
     @property  
     def foi(self):
@@ -1181,24 +1217,23 @@ class Texto(Popup):
     @foi.setter  
     def foi(self, value):
         self.esconde = value
-   
-    def esconde(self, ev=NoEv()):
-        ...
 
-    def mostra(self, tit="", txt="", **kwargs):
-        self.elt = Popup.POP.popup
-        self.cena.elt <= self.elt
-        Popup.POP.mostra(lambda *_: None, tit=tit, txt=txt, **kwargs)
-        
-        Popup.POP.esconde = self.esconde
+    def esconde(self, ev=NoEv()):
         pass
 
+    def mostra(self, tit="", txt="", act=None, **kwargs):
+        kwargs = kwargs if kwargs else self.kwargs
+        act = act if act else lambda *_: None
+        self.elt = Popup.POP.popup
+        self.cena.elt <= self.elt
+        
+        Popup.POP.esconde = self.esconde
+        Popup.POP.mostra(act, tit=tit, txt=txt, **kwargs)
+
     def vai(self, ev=NoEv()):
-        # self.elt = Popup.POP.popup
         ev.stopPropagation()
         self.cena.elt <= Popup.POP.popup
-        Popup.POP.mostra(lambda *_: None, self.tit, self.txt)
-        Popup.POP.esconde = self.esconde
+        self.mostra(self.tit, self.txt, act=self.esconde)
         return False
 
     @staticmethod
