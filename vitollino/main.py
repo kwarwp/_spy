@@ -519,6 +519,7 @@ class Elemento(Elemento_):
         self.img, self.title, self.dropper, self.alt = img, tit, drop, alt
         self._drag = self._over = self._drop = self._dover = self.vai = lambda *_: None
         self.cena = cena
+        self.nome = tit
         self.opacity = 0
         self.texto = texto
         self.vai = Texto(cena, texto, foi=self.foi).vai if texto else vai if vai else self.vai
