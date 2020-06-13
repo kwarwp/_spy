@@ -14,3 +14,4 @@
 "kathleen": {"author_nick": "ZENOBIO_2019", "author_name": "Genetica Zenóbio 2019", "author_email": "carlo@nce.ufrj.br", "author_org": "LABASE", "author_site": "labase.nce.ufrj.br", "author_public": "on"},
 "lorinda": {"author_nick": "PIBIC_EM_2020", "author_name": "Pibic-EM Zenóbio 2020", "author_email": "carlo@nce.ufrj.br", "author_org": "LABASE", "author_site": "labase.nce.ufrj.br", "author_public": "on"},
 "sophie": {"author_nick": "SuperPython_2020", "author_name": "SuperPython LABASE 2020", "author_email": "carlo@nce.ufrj.br", "author_org": "LABASE", "author_site": "labase.nce.ufrj.br", "author_public": "on"},
+"patricia": {"author_nick": "Curso_SME_2020", "author_name": "Curso SME 2020", "author_email": "carlo@nce.ufrj.br", "author_org": "LABASE", "author_site": "labase.nce.ufrj.br", "author_public": "on"},
