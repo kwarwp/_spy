@@ -439,7 +439,7 @@ class Elemento_:
 
     def __init__(self, img="", vai=None, style=NS, tit="", alt="", cena=INVENTARIO, score=NOSC, drag=False, drop='', **kwargs):
         self._auto_score = self.score if score else self._auto_score
-        self.img = img
+        self._img = img
         self.vai = vai if vai else lambda _=0: None
         self.cena = cena
         self.nome = tit
@@ -452,8 +452,8 @@ class Elemento_:
         self.scorer = dict(ponto=1, valor=cena.nome, carta=tit or img, casa=self.xy, move=None)
         self.scorer.update(score)
         if img:
-            self.img = html.IMG(src=img, title=tit, alt=alt, style=EIMGSTY)  # width=self.style["width"])
-            self.elt <= self.img
+            self._img = html.IMG(src=img, title=tit, alt=alt, style=EIMGSTY)  # width=self.style["width"])
+            self.elt <= self._img
         self.elt.onclick = self._click
         self.c(**kwargs)
         # _ = Dragger(self.elt) if drag else None
@@ -1871,4 +1871,3 @@ def __setup__():
 
 
 __setup__()
-
