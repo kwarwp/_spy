@@ -603,7 +603,7 @@ class Elemento(Elemento_):
             :param wh: w - tamanho da imagem na horizontal a partir da esquerda
             :param hh: h - tamanho da imagem na vertical a partir do topo
         """
-        self.elt.style.backgroundSize = f'{}px {}px'.format(*wh)
+        self.elt.style.backgroundSize = "{}px {}px".format(*wh)
                          
     @property
     def pos(self):
@@ -619,21 +619,21 @@ class Elemento(Elemento_):
             :param xy: x - posição da imagem na horizontal a partir da esquerda
             :param xy: y - posição da imagem na vertical a partir do topo
         """
-        self.elt.style.backgroundPosition = f'{}px {}px'.format(*xy)
+        self.elt.style.backgroundPosition = '{}px {}px'.format(*xy)
                          
     @property
-    def i(self):
+    def img(self):
         """Recupera a URI da imagem do elemento"""
         img = self.elt.style.backgroundImage
         img = img.split('"')[1] if '"' in img else ""
         return img
                          
-    @i.setter
+    @img.setter
     def img(self, value):
-        """Recupera a URI da imagem do elemento
+        """Atribui a imagem do elemento para este novo valor
             :param value: URI da imagem
         """
-        self.elt.style.backgroundImage = f'url({value})'
+        self.elt.style.backgroundImage = f"url({value})"
                          
     @property
     def o(self):
