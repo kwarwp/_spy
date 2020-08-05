@@ -27,6 +27,16 @@ Gerador de labirintos e jogos tipo *'novel'*.
 
 .. moduleauthor:: Carlo Oliveira <carlo@ufrj.br>
 
+Changelog
+---------
+.. versionadded::    20.08
+	Add img, siz and pos properties to Elemento    
+
+.. versionadded::    20.07
+	Fix Elemento x, y setters; add z function to Jogo
+	
+Descrição
+---------
 
 Gerador de labirintos e jogos tipo *'novel'*.
 
@@ -588,6 +598,52 @@ class Elemento(Elemento_):
         clone_mic = Elemento(self.img, tit=self.title, drag=True, style=style, cena=INVENTARIO)
         clone_mic.entra(INVENTARIO)
         self._do_foi = lambda *_: None
+                         
+    @property
+    def siz(self):
+        """Recupera uma tupla de inteiros reportando o tamanho da imagem do elemento"""
+        siz = self.elt.style.backgroundSize
+        siz = [int("".join(i for i in c if i.isdigit())) for c in siz.split()]
+        return siz
+                         
+    @siz.setter
+    def siz(self, wh):
+        """Recebe uma tupla de inteiros definindo o tamanho da imagem do elemento
+        
+            :param wh: w - tamanho da imagem na horizontal a partir da esquerda
+            :param hh: h - tamanho da imagem na vertical a partir do topo
+        """
+        self.elt.style.backgroundSize = "{}px {}px".format(*wh)
+                         
+    @property
+    def pos(self):
+        """Recupera uma tupla de inteiros reportando a posição da imagem do elemento"""
+        pos = self.elt.style.backgroundPosition
+        pos = [int("".join(i for i in c if i.isdigit())) for c in pos.split()]
+        return pos
+                         
+    @pos.setter
+    def pos(self, xy):
+        """Recebe uma tupla de inteiros definindo a posição da imagem do elemento
+        
+            :param xy: x - posição da imagem na horizontal a partir da esquerda
+            :param xy: y - posição da imagem na vertical a partir do topo
+        """
+        self.elt.style.backgroundPosition = '{}px {}px'.format(*xy)
+                         
+    @property
+    def img(self):
+        """Recupera a URI da imagem do elemento"""
+        img = self.elt.style.backgroundImage
+        img = img.split('"')[1] if '"' in img else ""
+        return img
+                         
+    @img.setter
+    def img(self, value):
+        """Atribui a imagem do elemento para este novo valor
+            :param value: URI da imagem
+        """
+        self.elt.style.backgroundImage = f"url({value})"
                          
     @property
     def o(self):
