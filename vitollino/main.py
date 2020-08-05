@@ -516,7 +516,7 @@ class Elemento(Elemento_):
                  x=0, y=0, w=100, h=100, o=1, texto='',
                  cena=INVENTARIO, score=NDCT, drag=False, drop={}, tipo="100% 100%", **kwargs):
         self._auto_score = self.score if score else self._auto_score
-        self.img, self.title, self.dropper, self.alt = img, tit, drop, alt
+        self._img, self.title, self.dropper, self.alt = img, tit, drop, alt
         self._drag = self._over = self._drop = self._dover = self.vai = lambda *_: None
         self.cena = cena
         self.nome = tit
@@ -576,7 +576,7 @@ class Elemento(Elemento_):
     def _do_foi(self):
         style = {'opacity': "inherited", 'width': 30, 'height': "30px", 'min-height': '30px', 'float': 'left',
                  'position': 'unset', 'overflow': 'hidden',
-                 'background-image': 'url({})'.format(self.img),
+                 'background-image': 'url({})'.format(self._img),
                  'background-position': '{} {}'.format(0, 0),
                  'background-size': '{}px {}px'.format(30, 20),
                  }
@@ -585,7 +585,7 @@ class Elemento(Elemento_):
         _texto = self.texto if self.tit == self.title else CORRECT.format(self.tit)
         self.vai = Texto(self.cena, _texto).vai
 
-        clone_mic = Elemento(self.img, tit=self.title, drag=True, style=style, cena=INVENTARIO)
+        clone_mic = Elemento(self._img, tit=self.title, drag=True, style=style, cena=INVENTARIO)
         clone_mic.entra(INVENTARIO)
         self._do_foi = lambda *_: None
                          
@@ -756,7 +756,7 @@ class Codigo(Elemento):
     :param cena: cena onde o objeto vai ser colocado
     """
     def __init__(self, codigo="", topo="", cena=INVENTARIO, img="", vai=None, style=NS):
-        self.img = img
+        self._img = img
         self.vai = vai if vai else lambda _=0: None
         self.cena = cena
         self.opacity = 0
@@ -768,8 +768,8 @@ class Codigo(Elemento):
         istyle = dict(EIMGSTY)
         istyle.update(opacity=0.3)
         if img:
-            self.img = html.IMG(src=img, style=istyle)
-            self.elt <= self.img
+            self._img = html.IMG(src=img, style=istyle)
+            self.elt <= self._img
         if topo:
             self.topo = html.DIV(color="black", style=dict(padding="15px"))
             self.topo.html = topo
