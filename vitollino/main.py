@@ -643,7 +643,7 @@ class Elemento(Elemento_):
         """Atribui a imagem do elemento para este novo valor
             :param value: URI da imagem
         """
-        self.elt.style.backgroundImage = f"url({value})"
+        self.elt.style.backgroundImage = "url({})".format(value)
                          
     @property
     def o(self):
