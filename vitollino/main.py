@@ -27,6 +27,16 @@ Gerador de labirintos e jogos tipo *'novel'*.
 
 .. moduleauthor:: Carlo Oliveira <carlo@ufrj.br>
 
+Changelog
+---------
+.. versionadded::    20.08
+	Add img, siz and pos properties to Elemento    
+
+.. versionadded::    20.07
+	Fix Elemento x, y setters; add z function to Jogo
+	
+Descrição
+---------
 
 Gerador de labirintos e jogos tipo *'novel'*.
 
@@ -541,9 +551,9 @@ class Elemento(Elemento_):
         self.scorer = dict(ponto=1, valor=cena.nome, carta=tit or img, casa=self.xy, move=None)
         self.scorer.update(score)
         # if False:
-        #     self.img = html.IMG(Id="img_" + tit, src=img, title=tit, alt=alt,
+        #     self._img = html.IMG(Id="img_" + tit, src=img, title=tit, alt=alt,
         #                         style=EIMGSTY)  # width=self.style["width"])
-        #     self.elt <= self.img
+        #     self.elt <= self._img
         self.elt.onclick = self._click
         self.c(**kwargs)
         # _ = Dragger(self.elt) if drag else None
@@ -553,7 +563,7 @@ class Elemento(Elemento_):
         self.elt.onmouseover = lambda ev: self._over(ev)
         self.elt.ondrop = lambda ev: self._drop(ev)
         self.elt.ondragover = lambda ev: self._dover(ev)
-        # self.img.onmousedown = self.img_prevent
+        # self._img.onmousedown = self._img_prevent
         self.do_drag(drag)
         self.do_drop(drop)
         #Elemento._scorer_()
@@ -1861,3 +1871,4 @@ def __setup__():
 
 
 __setup__()
+
