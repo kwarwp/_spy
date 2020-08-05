@@ -590,6 +590,52 @@ class Elemento(Elemento_):
         self._do_foi = lambda *_: None
                          
     @property
+    def siz(self):
+        """Recupera uma tupla de inteiros reportando o tamanho da imagem do elemento"""
+        siz = self.elt.style.backgroundSize
+        siz = [int("".join(i for i in c if i.isdigit())) for c in siz.split()]
+        return siz
+                         
+    @siz.setter
+    def siz(self, w, h):
+        """Recebe uma tupla de inteiros definindo o tamanho da imagem do elemento
+        
+            :param w: tamanho da imagem na horizontal a partir da esquerda
+            :param h: tamanho da imagem na vertical a partir do topo
+        """
+        self.elt.style.backgroundSize = f'{w}px {h}px'
+                         
+    @property
+    def pos(self):
+        """Recupera uma tupla de inteiros reportando a posição da imagem do elemento"""
+        pos = self.elt.style.backgroundPosition
+        pos = [int("".join(i for i in c if i.isdigit())) for c in pos.split()]
+        return pos
+                         
+    @pos.setter
+    def pos(self, x, y):
+        """Recebe uma tupla de inteiros definindo a posição da imagem do elemento
+        
+            :param x: posição da imagem na horizontal a partir da esquerda
+            :param y: posição da imagem na vertical a partir do topo
+        """
+        self.elt.style.backgroundPosition = f'{x}px {y}px'
+                         
+    @property
+    def img(self):
+        """Recupera a URI da imagem do elemento"""
+        img = self.elt.style.backgroundImage
+        img = img.split('"')[1] if '"' in img else ""
+        return img
+                         
+    @img.setter
+    def img(self, value):
+        """Recupera a URI da imagem do elemento
+            :param value: URI da imagem
+        """
+        self.elt.style.backgroundImage = f'url({value})'
+                         
+    @property
     def o(self):
         return int(self.elt.style.opacity)
                          
