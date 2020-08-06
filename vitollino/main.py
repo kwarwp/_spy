@@ -664,7 +664,7 @@ class Elemento(Elemento_):
                          
     @x.setter
     def x(self, value):
-        self.elt.style.left = f"{value}px"
+        self.elt.style.left = "{}px".format(value)
                          
     @property
     def y(self):
@@ -672,7 +672,7 @@ class Elemento(Elemento_):
                          
     @y.setter
     def y(self, value):
-        self.elt.style.top = f"{value}px"
+        self.elt.style.top = "{}px".format(value)
 
     @property
     def tit(self):
