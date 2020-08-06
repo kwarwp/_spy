@@ -578,7 +578,12 @@ class Elemento(Elemento_):
         scr.score_ = html.H2("0")
         scr.elt <= scr.score_
         scr.entra(INVENTARIO)
-        
+ 
+    def ocupa(self, ocupante):
+        if hasattr(ocupante, 'elt'):
+            self.elt <= ocupante.elt
+        else:
+            self.elt <= ocupante
 
     def foi(self):
         self._do_foi()
