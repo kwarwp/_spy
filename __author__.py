@@ -15,3 +15,4 @@
 "lorinda": {"author_nick": "PIBIC_EM_2020", "author_name": "Pibic-EM Zenóbio 2020", "author_email": "carlo@nce.ufrj.br", "author_org": "LABASE", "author_site": "labase.nce.ufrj.br", "author_public": "on"},
 "sophie": {"author_nick": "SuperPython_2020", "author_name": "SuperPython LABASE 2020", "author_email": "carlo@nce.ufrj.br", "author_org": "LABASE", "author_site": "labase.nce.ufrj.br", "author_public": "on"},
 "patricia": {"author_nick": "PPGI_OO_2020", "author_name": "Curso Desenvolvimento PPGI 2020", "author_email": "carlo@nce.ufrj.br", "author_org": "LABASE", "author_site": "labase.nce.ufrj.br", "author_public": "on"},
+"janese": {"author_nick": "UNESP_2020", "author_name": "Curso Extensão UNESP 2020", "author_email": "carlo@nce.ufrj.br", "author_org": "LABASE", "author_site": "labase.nce.ufrj.br", "author_public": "on"},
