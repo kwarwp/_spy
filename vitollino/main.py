@@ -514,6 +514,7 @@ class Elemento(Elemento_):
     :param w: Largura em pixels do elemento na cena
     :param h: Altura em pixels do elemento na cena
     :param texto: Se fornecido, este texto vai aparecer quando se clica no elemento
+    :param foi: função executada quando se clica para dispensar o texto
     :param cena: cena alternativa onde o objeto vai ser colocado
     :param score: determina o score para este elemento
     :param drag: Se o valor for True, o o elmento será arrastável, default Faslse
@@ -523,16 +524,17 @@ class Elemento(Elemento_):
     _score = None
 
     def __init__(self, img="", vai=None, style=NDCT, tit="", alt="",
-                 x=0, y=0, w=100, h=100, o=1, texto='',
+                 x=0, y=0, w=100, h=100, o=1, texto='', foi=None,
                  cena=INVENTARIO, score=NDCT, drag=False, drop={}, tipo="100% 100%", **kwargs):
         self._auto_score = self.score if score else self._auto_score
         self._img, self.title, self.dropper, self.alt = img, tit, drop, alt
         self._drag = self._over = self._drop = self._dover = self.vai = lambda *_: None
+	self._foi = foi or lambda *_: None
         self.cena = cena
         self.nome = tit
         self.opacity = 0
-        self.texto = texto
-        self.vai = Texto(cena, texto, foi=self.foi).vai if texto else vai if vai else self.vai
+        self.texto = Texto(self.cena, texto, foi=self._foi) if texto else None
+        self.vai =  self.texto if texto else vai if vai else self.vai
         # height = style["height"] if "height" in style else style["maxHeight"] if "maxHeigth" in style else 100
         # height = height[:-2] if isinstance(height, str) and "px" in height else height
         self.style = dict(**PSTYLE)
@@ -603,6 +605,20 @@ class Elemento(Elemento_):
         clone_mic = Elemento(self._img, tit=self.title, drag=True, style=style, cena=INVENTARIO)
         clone_mic.entra(INVENTARIO)
         self._do_foi = lambda *_: None
+                         
+    @property
+    def texto(self):
+        """Recupera o objeto texto falado pelo objeto"""
+        return self.texto
+                         
+    @texto.setter
+    def texto(self, tex):
+        """Recebe o texto que o elemento deve falar
+        
+            :param tex: texto que o elemento deve falar
+        """
+        self.texto = self.texto or Texto(self.cena, tex, foi=self._foi)
+	self.vai = self.texto.vai
                          
     @property
     def siz(self):
