@@ -533,8 +533,8 @@ class Elemento(Elemento_):
         self.cena = cena
         self.nome = tit
         self.opacity = 0
-        self.texto = Texto(self.cena, texto, foi=self._foi) if texto else None
-        self.vai =  self.texto if texto else vai if vai else self.vai
+        self._texto = Texto(self.cena, texto, foi=self._foi) if texto else None
+        self.vai =  self._texto if texto else vai if vai else self.vai
         # height = style["height"] if "height" in style else style["maxHeight"] if "maxHeigth" in style else 100
         # height = height[:-2] if isinstance(height, str) and "px" in height else height
         self.style = dict(**PSTYLE)
@@ -609,7 +609,7 @@ class Elemento(Elemento_):
     @property
     def texto(self):
         """Recupera o objeto texto falado pelo objeto"""
-        return self.texto
+        return self._texto
                          
     @texto.setter
     def texto(self, tex):
@@ -617,8 +617,8 @@ class Elemento(Elemento_):
         
             :param tex: texto que o elemento deve falar
         """
-        self.texto = self.texto or Texto(self.cena, tex, foi=self._foi)
-	self.vai = self.texto.vai
+        self._texto = self._texto or Texto(self.cena, tex, foi=self._foi)
+	self.vai = self._texto.vai
                          
     @property
     def siz(self):
