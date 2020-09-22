@@ -534,7 +534,7 @@ class Elemento(Elemento_):
         self.nome = tit
         self.opacity = 0
         self._texto = Texto(self.cena, texto, foi=self._foi) if texto else None
-        self.vai =  self._texto if texto else vai if vai else self.vai
+        self.vai =  self._texto.vai if texto else vai if vai else self.vai
         # height = style["height"] if "height" in style else style["maxHeight"] if "maxHeigth" in style else 100
         # height = height[:-2] if isinstance(height, str) and "px" in height else height
         self.style = dict(**PSTYLE)
