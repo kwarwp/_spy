@@ -539,7 +539,7 @@ class Elemento(Elemento_):
         # height = style["height"] if "height" in style else style["maxHeight"] if "maxHeigth" in style else 100
         # height = height[:-2] if isinstance(height, str) and "px" in height else height
         self.style = dict(**PSTYLE)
-        self.style.update(**{'position': 'absolute', 'overflow': 'hidden', 'o': o,
+        self.style.update(**{'position': 'absolute', 'overflow': 'hidden', 'opacity': o,
                              'left': x, 'top': y, 'width': '{}px'.format(w), 'height': '{}px'.format(h),
                              'background-image': 'url({})'.format(img),
                              'background-position': '{} {}'.format(0, 0),
