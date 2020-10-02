@@ -690,6 +690,22 @@ class Elemento(Elemento_):
     @y.setter
     def y(self, value):
         self.elt.style.top = "{}px".format(value)
+                         
+    @property
+    def w(self):
+        return int(self.elt.style.width[:-2])
+                         
+    @w.setter
+    def w(self, value):
+        self.elt.style.width = "{}px".format(value)
+                         
+    @property
+    def h(self):
+        return int(self.elt.style.height[:-2])
+                         
+    @h.setter
+    def h(self, value):
+        self.elt.style.height = "{}px".format(value)
 
     @property
     def tit(self):
