@@ -512,6 +512,7 @@ class Elemento(Elemento_):
     :param x: Posição x, na horizontal a partir da esquerda do elemento na cena
     :param y: Posição y, na vertical a partir do topo do elemento na cena
     :param w: Largura em pixels do elemento na cena
+    :param o: Tranparência da imagem 1:opaco 0:transparente
     :param h: Altura em pixels do elemento na cena
     :param texto: Se fornecido, este texto vai aparecer quando se clica no elemento
     :param foi: função executada quando se clica para dispensar o texto
@@ -538,7 +539,7 @@ class Elemento(Elemento_):
         # height = style["height"] if "height" in style else style["maxHeight"] if "maxHeigth" in style else 100
         # height = height[:-2] if isinstance(height, str) and "px" in height else height
         self.style = dict(**PSTYLE)
-        self.style.update(**{'position': 'absolute', 'overflow': 'hidden', 'o': 1,
+        self.style.update(**{'position': 'absolute', 'overflow': 'hidden', 'o': o,
                              'left': x, 'top': y, 'width': '{}px'.format(w), 'height': '{}px'.format(h),
                              'background-image': 'url({})'.format(img),
                              'background-position': '{} {}'.format(0, 0),
