@@ -19,3 +19,4 @@
 "roberta": {"author_nick": "Python_2020", "author_name": "Curso Iniciação Python 2020", "author_email": "carlo@nce.ufrj.br", "author_org": "LABASE", "author_site": "labase.nce.ufrj.br", "author_public": "on"},
 "phyllis": {"author_nick": "WorkShop_2020", "author_name": "Workshop SupyGirls Outubro 20202", "author_email": "carlo@nce.ufrj.br", "author_org": "LABASE", "author_site": "labase.nce.ufrj.br", "author_public": "on"},
 "elizabeth": {"author_nick": "WorkShop_2020", "author_name": "Workshop SupyGirls Outubro 20202", "author_email": "carlo@nce.ufrj.br", "author_org": "LABASE", "author_site": "labase.nce.ufrj.br", "author_public": "on"},
+"joanna": {"author_nick": "bellexand", "author_name": "isabelle alexandre da silva", "author_email": "isabellesilva031@gmail.com", "author_org": "", "author_site": "", "author_public": "on"},
