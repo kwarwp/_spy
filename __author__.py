@@ -22,3 +22,4 @@
 "joanna": {"author_nick": "bellexand", "author_name": "isabelle alexandre da silva", "author_email": "isabellesilva031@gmail.com", "author_org": "", "author_site": "", "author_public": "on"},
 "grete": {"author_nick": "dfssf", "author_name": "sdfd", "author_email": "akakaka@gmail.com", "author_org": "", "author_site": "", "author_public": "on"},
 "megan": {"author_nick": "katia", "author_name": "Katia Guimarães Sousa Palomo", "author_email": "profa.katia.palomo@gmail.com", "author_org": "Instituto Federal de Brasília", "author_site": "www.ifb.edu.br", "author_public": "on"},
+"joan": {"author_nick": "", "author_name": "STEAM - CL", "author_email": "cici.rco@gmail.com", "author_org": "", "author_site": "", "author_public": "on"},
