@@ -23,4 +23,6 @@
 "grete": {"author_nick": "dfssf", "author_name": "sdfd", "author_email": "akakaka@gmail.com", "author_org": "", "author_site": "", "author_public": "on"},
 "megan": {"author_nick": "katia", "author_name": "Katia Guimarães Sousa Palomo", "author_email": "profa.katia.palomo@gmail.com", "author_org": "Instituto Federal de Brasília", "author_site": "www.ifb.edu.br", "author_public": "on"},
 "joan": {"author_nick": "", "author_name": "STEAM - CL", "author_email": "cici.rco@gmail.com", "author_org": "", "author_site": "", "author_public": "on"},
-"joan": {"author_nick": "", "author_name": "STEAM - CL", "author_email": "cici.rco@gmail.com", "author_org": "", "author_site": "", "author_public": "on"},
+"radia": {"author_nick": "", "author_name": "NEW_00", "author_email": "", "author_org": "", "author_site": "", "author_public": "on"},
+"irma": {"author_nick": "", "author_name": "NEW_01", "author_email": "", "author_org": "", "author_site": "", "author_public": "on"},
+"monica": {"author_nick": "", "author_name": "NEW_02", "author_email": "", "author_org": "", "author_site": "", "author_public": "on"},
