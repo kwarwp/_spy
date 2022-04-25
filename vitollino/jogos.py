@@ -57,7 +57,7 @@ class Cubos:
         :param nx: número de cubos na horizontal.
         :param ny: número de cubos na vertical.
         """
-        from vitollino.main import Cena, Elemento
+        from main import Cena, Elemento
         class Face(Elemento):
             """Reperesenta a face do cubo.
 
