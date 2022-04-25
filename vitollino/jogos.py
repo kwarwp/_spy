@@ -16,6 +16,9 @@ Changelog
 .. versionadded::    22.04
         Criação do módulo de jogos.
 
+.. versionchanged::    22.04.a
+        Usa os comandos originais do DOM.
+
 
 .. seealso::
 
@@ -24,18 +27,14 @@ Changelog
 .. _`Ajuda do SuperPython`: https://supygirls.readthedocs.io
 
 """
-from vitollino.main import Cena, Elemento, STYLE
+from vitollino.main import Cena, Elemento
 from random import randint
 # from browser import alert
 
-STYLE.update(width=850, height="650px")
+# STYLE.update(width=850, height="650px")
 
 IMGUR = "https://i.imgur.com/{}.jpg"
-# GOGHRoom = "https://i.imgur.com/CRNsfXO.jpg"
 FUNDO = "qWcEao4"
-# GOGHIntru = "https://i.imgur.com/nVpyITK.png"
-# CITY1 = "https://i.imgur.com/jiJY1NY.jpg"
-# LAND1 = "https://i.imgur.com/GsdFmpz.jpg"
 CENAS = "CRNsfXO swVe1IW jiJY1NY GsdFmpz T6pmXbY dJ4WOIh".split()
 CENAS_ = "swVe1IW nVpyITK     "
 OFF = 2000
@@ -48,7 +47,7 @@ class Cubos:
     def write(self, text):
         self.el.elt.html = text
 
-    def __init__(self, cenas, tw=None, th=600, nx=4, ny=3):
+    def __init__(self, cenas, tw=None, th=600, nx=4, ny=3, ofx=OFX, ofy=OFY):
         """Jogo que define cubos formando uma cena em cada lado.
 
         Joga-se clicando em uma das porções cardeais da face do cubo.
@@ -59,7 +58,11 @@ class Cubos:
         :param th: tamanho em pixeis de altura da cena.
         :param nx: número de cubos na horizontal.
         :param ny: número de cubos na vertical.
+        :param ofx: deslocamento na horizontal.
+        :param ofy: deslocamento na vertical.
         """
+
+        # from vitollino.main import Cena, Elemento
 
         class Face(Elemento):
             """Reperesenta a face do cubo.
@@ -80,18 +83,45 @@ class Cubos:
                 w, h = tw // nx, th // ny
                 self.dh = h
                 x, y = (inx % nx) * w, (inx // nx) * h
-                super().__init__(IMGUR.format(face), x=x + OFX, y=y - OFF + OFY, w=w, h=h,
-                                 cena=cena, vai=self.vai, **kwargs)
-                self.siz = (tw, th)
-                self.pos = (-x, -y)
+                super().__init__(IMGUR.format(face), x=x + ofx, y=y - OFF + ofy, w=w, h=h,
+                                 cena=cena, vai=self.vai,
+                                 style={'background-image': "url({})".format(IMGUR.format(face)),
+                                        'background-size': f"{tw}px {th}px",
+                                        "background-position": f'{-x}px {-y}px'},
+                                 **kwargs)
+                # self.siz = (tw, th)
+                # self.pos = (-x, -y)
+                self.yy = y - OFF + ofy
+                self.xx = x + OFX
+                self.elt.style.width = f"{w}px"
+                self.elt.style.height = f"{h}px"
+                self.elt.html = ""
                 self.quad = 0
+
+            @property
+            def xx(self):
+                top = self.elt.style.left[:-2]
+                return int(top if top else 0)
+
+            @xx.setter
+            def xx(self, value):
+                self.elt.style.left = "{}px".format(value)
+
+            @property
+            def yy(self):
+                top = self.elt.style.top[:-2]
+                return int(top if top else 0)
+
+            @yy.setter
+            def yy(self, value):
+                self.elt.style.top = "{}px".format(value)
 
             def show(self):
                 """Mostra esta face do cubo.
 
                 :return: sempre verdadeiro, para indicar que a face está sendo mostrada.
                 """
-                self.y += OFF if self.y < -10 else 0
+                self.yy += OFF if self.yy < -10 else 0
                 return True
 
             def hide(self):
@@ -99,7 +129,7 @@ class Cubos:
 
                 :return: sempre falso, para indicar que a face está sendo ocultada.
                 """
-                self.y -= OFF if self.y > 10 else 0
+                self.yy -= OFF if self.yy > 10 else 0
                 return False
 
             def orient(self, ori):
@@ -186,7 +216,7 @@ class Cubos:
         cena = Cena(IMGUR.format(FUNDO)).vai()
         tw, th = (tw, tw // nx * ny) if tw else (th // ny * nx, th)
         Cubo.CUBOS = self
-        self.el = Elemento(IMGUR.format(FUNDO), w=300, cena=cena, style={"color": "white"})
+        self.el = Elemento(IMGUR.format(FUNDO), w=300, h=100, cena=cena, style={"color": "white"})
         self.cubos = cubos = [Cubo(inx=inx, faces=cenas) for inx in range(nx * ny)]
         [cube.roll(randint(0, 23)) for cube in cubos]
         # [cube.roll(0) for cube in cubos]
