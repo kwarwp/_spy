@@ -24,11 +24,8 @@ Changelog
 .. _`Ajuda do SuperPython`: https://supygirls.readthedocs.io
 
 """
-from vitollino.main import Cena, Elemento, STYLE
 from random import randint
 # from browser import alert
-
-STYLE.update(width=850, height="650px")
 
 IMGUR = "https://i.imgur.com/{}.jpg"
 # GOGHRoom = "https://i.imgur.com/CRNsfXO.jpg"
@@ -60,7 +57,7 @@ class Cubos:
         :param nx: número de cubos na horizontal.
         :param ny: número de cubos na vertical.
         """
-
+        from vitollino.main import Cena, Elemento
         class Face(Elemento):
             """Reperesenta a face do cubo.
 
@@ -201,4 +198,7 @@ class Cubos:
 
 
 if __name__ == "__main__":
+    from vitollino.main import STYLE
+    STYLE.update(width=850, height="650px")
+
     Cubos(CENAS, tw=500, nx=2, ny=2)
