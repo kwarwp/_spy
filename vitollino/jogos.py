@@ -11,6 +11,13 @@
 
 .. codeauthor:: Carlo Oliveira <carlo@ufrj.br>
 
+Classes neste módulo:
+
+    :py:class:`Cubos` Quebra Cabeça com cubos que rolam.
+
+    :py:class:`Roteiro` Facilitador de criação de roteiros.
+
+
 Changelog
 ---------
 .. versionadded::    22.04
@@ -18,6 +25,9 @@ Changelog
 
 .. versionchanged::    22.04.a
         Usa os comandos originais do DOM.
+
+.. versionadded::    22.05
+        Criação da classe Roteiro.
 
 
 .. seealso::
@@ -27,18 +37,119 @@ Changelog
 .. _`Ajuda do SuperPython`: https://supygirls.readthedocs.io
 
 """
-from vitollino.main import Cena, Elemento
+from vitollino.main import Cena, Elemento, Texto
 from random import randint
 # from browser import alert
+from collections import namedtuple
+Ator = namedtuple('Elenco','ator nome mini alinha')
+Fala = namedtuple('Fala','ator fala prox age')  # , defaults=(None,)*4)
+A = namedtuple('Ali','e m d')(-1, 0, 1)
+
 
 # STYLE.update(width=850, height="650px")
 
 IMGUR = "https://i.imgur.com/{}.jpg"
 FUNDO = "qWcEao4"
 CENAS = "CRNsfXO swVe1IW jiJY1NY GsdFmpz T6pmXbY dJ4WOIh".split()
-CENAS_ = "swVe1IW nVpyITK     "
 OFF = 2000
 OFX, OFY = 100, 50
+
+
+class Roteiro:
+    def __init__(self, cena, roteiro, elenco=(), foi=None):
+        """Cria um roteiro de falas entre diversos personagens.
+
+        Os parâmetros roteiro e elenco são definidos por tupla nomeadas.
+
+            Ator
+
+                ator:
+                    instância de elemento do ator que no diálogo.
+
+                nome:
+                    nome que vai aparecer no título do ator.
+
+                mini:
+                    fração da altura do ator na miniatura (0.1 a 1.0)
+
+                alinha:
+
+        :param cena: cena onde o diálogo acontece.
+        :param roteiro: um conjunto de falas entre os personagens.
+        :param elenco: caracterização dos personagens.
+        :param foi: número de cubos na horizontal.
+        """
+        self.dic_ator = {a.ator: a for a in elenco}
+        _prox = zip(roteiro, roteiro[1:] + [Fala(None, "", None, None)])
+        self.foi = foi if foi else lambda *_: None
+        roteiro = [Fala(a, f, g if g else (p.ator if p else None), x) for [a, f, g, x], p in _prox]
+        self.elenco, self.roteiro = elenco, roteiro
+        self._foi = lambda *_: None
+        script = self
+        for _ator in elenco:
+            _ator.ator.vai = self.nada
+            _ator.ator.tit = _ator.nome
+            _ator.ator.elt.style.filter = "brightness(30%)"
+        protagonista = elenco[0].ator if elenco else roteiro[0].ator
+        self.atores = [ator.ator for ator in elenco] if elenco else [ator.ator for ator in roteiro]
+        protagonista.vai = self.segue
+        protagonista.elt.style.filter = "brightness(100%)"
+
+        class Falar(Texto):
+            def __init__(self, ator, fala, prox, act=None, mini=1, **kwarg):
+                self.ator, self.fala, self.prox = ator, fala, prox
+                self._foi = act or self.nada
+                minih = 80 / mini
+                self.mini = Elemento(ator.img, cena=cena, w=80, h=80, tipo=f"80px {minih}px",
+                                     style=dict(top="20%", margin="-10px 10%"))
+                super().__init__(cena, fala, **kwarg)
+
+            def esconde(self, *_):
+                self.mini.elt.remove()
+                self.ator.elt.style.filter = "brightness(30%)"
+                script.testa(self.prox)
+                # script.segue()
+                # super().esconde()
+                self._foi()
+
+            def vai(self, *_):
+                super().vai()
+                self.ator.elt.style.filter = "brightness(5%)"
+                self.ator.vai = self.nada
+
+            @property
+            def foi(self):
+                return self._foi
+
+            @foi.setter
+            def foi(self, value):
+                self._foi = value
+
+            def nada(self, *_):
+                pass
+
+        self._fala = Falar
+
+    def nada(self, *_):
+        pass
+
+    def segue(self, *_):
+        ator, fala, prox, action = self.scripter()
+        # ator.elt.style.filter = "brightness(30%)"
+        fala = self._fala(ator, fala, prox, action, mini=self.dic_ator[ator].mini)  # .vai()
+        if prox:
+            prox.vai = self.segue
+        fala.vai()
+
+    def testa(self, prox, *_):
+        if self.roteiro:
+            prox.elt.style.filter = "brightness(100%)"
+        else:
+            for ato in self.atores:
+                ato.elt.style.filter = "brightness(100%)"
+
+    def scripter(self, *_):
+        return self.roteiro.pop(0)
 
 
 class Cubos:

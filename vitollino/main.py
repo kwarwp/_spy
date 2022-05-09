@@ -759,12 +759,13 @@ class Cena:
     """
 
     def __init__(self, img=IMAGEM, esquerda=NADA, direita=NADA, meio=NADA,
-                 vai=None, nome='', xy=(0, 0), score=NOSC, **kwargs):
+                 vai=None, nome='', tela=DOC_PYDIV, xy=(0, 0), score=NOSC, **kwargs):
         width = STYLE["width"]
         self.scorer = dict(ponto=1, valor="__JOGO__", carta=nome, casa=xy, move=None)
         self.scorer.update(score)
         self._auto_score = self.score if score else self._auto_score
         self.ev = NoEv()
+        self.tela = tela
         self.xy = xy
         self.img = img
         self.nome = nome
@@ -861,7 +862,7 @@ class Cena:
         self.ev = ev
         INVENTARIO.cena = self
         INVENTARIO.desmonta()
-        tela = DOC_PYDIV
+        tela = self.tela
         tela.html = ""
         tela <= self.elt
         INVENTARIO.monta()
