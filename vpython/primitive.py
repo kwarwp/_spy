@@ -210,8 +210,9 @@ class cone(primitive):
 
 
 class curve(primitive):
-    def __init__(self, **kwargs):
-        primitive.__init__(self, window.glowscript.curve, **kwargs)
+    def __init__(self, *args):
+        primitive.__init__(self, window.glowscript.curve)
+        self._prim = window.glowscript.curve(args)
 
     def push(self, v):
         if isinstance(v, vec):

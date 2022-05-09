@@ -27,6 +27,16 @@ Gerador de labirintos e jogos tipo *'novel'*.
 
 .. moduleauthor:: Carlo Oliveira <carlo@ufrj.br>
 
+Changelog
+---------
+.. versionadded::    20.08
+	Add img, siz and pos properties to Elemento    
+
+.. versionadded::    20.07
+	Fix Elemento x, y setters; add z function to Jogo
+	
+Descrição
+---------
 
 Gerador de labirintos e jogos tipo *'novel'*.
 
@@ -77,6 +87,8 @@ ZSTYLE = {'position': "absolute", 'width': "10%", 'margin': "0%",
 PKEYS = ['False', 'None', 'True', ' and ', ' as ', 'assert', 'break', 'class ', 'continue', 'def ',
          'del', 'elif', 'else', 'except', 'finally', 'for ', 'from ', 'global ', 'if ', 'import ',
          ' in ', ' is ', 'lambda', 'nonlocal', ' not ', ' or ', 'pass', 'raise', 'return', 'try', 'while', 'with', 'yield']
+NDCT = {}
+FIX_COUNT = {}
 
 
 class _PATTERN:
@@ -299,6 +311,7 @@ class Inventario:
         self.cena = None
         self.nome = "__INVENTARIO__"
         self.inventario = {}
+        self.item = {}
         self.opacity = 0
         self.style = dict(**ISTYLE)
         self.style["min-height"] = "30px"
@@ -335,7 +348,7 @@ class Inventario:
         self.opacity = abs(self.opacity - 0.5)
         self.elt.style.opacity = self.opacity
 
-    def bota(self, nome_item, item="", acao=None):
+    def bota(self, nome_item, item="", drag=False, acao=None):
         """
         Os objetos que estão de posse do jogador.
 
@@ -347,16 +360,19 @@ class Inventario:
 
         :param nome_item: uma string com o nome do item, ele será criado e colocado no inventário
         :param item: URL da imagem do item nomeado por nome_item
+        :param drag: Se for True o objeto será arrastável
         :param acao: ação associada com o item nomeado quando ele é clicado
         """
         if isinstance(nome_item, str):
-            item_img = html.IMG(Id=nome_item, src=item, width=30, style=EIMGSTY)
-            self.elt <= item_img
-        else:
-            nome_item.entra(self)
-            item_img = nome_item.elt
-            item_img.style = ESTYLE
-        Dropper(item_img)
+            #item_img = html.IMG(Id=nome_item, src=item, width=30, height="30px", style=ESTYLE)
+            nome_item = Elemento(item, tit=nome_item, w=30, height=30, drag=drag, style=ESTYLE)
+
+        nome_item.entra(self)
+        item_img = nome_item.elt
+        item_img.style = ESTYLE
+        nome = nome_item.tit or nome_item
+        self.item[nome] = nome_item
+        # Dropper(item_img)
         if acao:
             item_img.onclick = lambda *_: acao()
         else:
@@ -366,7 +382,8 @@ class Inventario:
     def tira(self, nome_item):
         item_img = document[nome_item]
         self.limbo <= item_img
-        return self.inventario.pop(nome_item, None)
+        result = self.item.pop(nome_item) if nome_item in self.item else self.inventario.pop(nome_item, None)
+        return result
 
     def score(self, casa, carta, move, ponto, valor, _level=1):
         data = dict(doc_id=INVENTARIO.GID, carta=carta, casa=casa, move=move, ponto=ponto, valor=valor,
@@ -398,7 +415,9 @@ class Inventario:
 INVENTARIO = Inventario()
 
 
-class Elemento:
+
+
+class Elemento_:
     """
     Um objeto de interação que é representado por uma imagem em uma cena.
 
@@ -420,9 +439,10 @@ class Elemento:
 
     def __init__(self, img="", vai=None, style=NS, tit="", alt="", cena=INVENTARIO, score=NOSC, drag=False, drop='', **kwargs):
         self._auto_score = self.score if score else self._auto_score
-        self.img = img
+        self._img = img
         self.vai = vai if vai else lambda _=0: None
         self.cena = cena
+        self.nome = tit
         self.opacity = 0
         self.style = dict(**PSTYLE)
         # self.style["min-width"], self.style["min-height"] = w, h
@@ -432,8 +452,8 @@ class Elemento:
         self.scorer = dict(ponto=1, valor=cena.nome, carta=tit or img, casa=self.xy, move=None)
         self.scorer.update(score)
         if img:
-            self.img = html.IMG(src=img, title=tit, alt=alt, style=EIMGSTY)  # width=self.style["width"])
-            self.elt <= self.img
+            self._img = html.IMG(src=img, title=tit, alt=alt, style=EIMGSTY)  # width=self.style["width"])
+            self.elt <= self._img
         self.elt.onclick = self._click
         self.c(**kwargs)
         # _ = Dragger(self.elt) if drag else None
@@ -474,6 +494,303 @@ class Elemento:
                 for nome, img in kwargs.items()]
 
 
+
+class Elemento(Elemento_):
+    """
+    Um objeto de interação que é representado por uma imagem em uma cena.
+
+            papel = Elemento(
+             img="papel.png", tit="caderno de notas",
+             vai=pega_papel, style=dict(left=350, top=550, width=60))
+
+
+    :param img: URL de uma imagem
+    :param vai: função executada quando se clica no objeto
+    :param style: dicionário com dimensões do objeto {"left": ..., "top": ..., width: ..., height: ...}
+    :param tit: Texto que aparece quando se passa o mouse sobre o objeto
+    :param alt: Texto para leitores de tela
+    :param x: Posição x, na horizontal a partir da esquerda do elemento na cena
+    :param y: Posição y, na vertical a partir do topo do elemento na cena
+    :param w: Largura em pixels do elemento na cena
+    :param o: Tranparência da imagem 1:opaco 0:transparente
+    :param h: Altura em pixels do elemento na cena
+    :param texto: Se fornecido, este texto vai aparecer quando se clica no elemento
+    :param foi: função executada quando se clica para dispensar o texto
+    :param cena: cena alternativa onde o objeto vai ser colocado
+    :param score: determina o score para este elemento
+    :param drag: Se o valor for True, o o elmento será arrastável, default Faslse
+    :param drop: recebe um dicionário {"a": ator} onde ator é uma função def ator(ev, nome} chamada quando "a" é arrastado cá
+    :param kwargs: lista de parametros nome=URL que geram elementos com este nome e a dada imagem
+    """
+    _score = None
+
+    def __init__(self, img="", vai=None, style=NDCT, tit="", alt="",
+                 x=0, y=0, w=100, h=100, o=1, texto='', foi=None,
+                 cena=INVENTARIO, score=NDCT, drag=False, drop={}, tipo="100% 100%", **kwargs):
+        self._auto_score = self.score if score else self._auto_score
+        self._img, self.title, self.dropper, self.alt = img, tit, drop, alt
+        self._drag = self._over = self._drop = self._dover = self.vai = lambda *_: None
+	self._foi = foi or lambda *_: None
+        self.cena = cena
+        self.nome = tit
+        self.opacity = 0
+        self._texto = Texto(self.cena, texto, foi=self._foi) if texto else None
+        self.vai =  self._texto.vai if texto else vai if vai else self.vai
+        # height = style["height"] if "height" in style else style["maxHeight"] if "maxHeigth" in style else 100
+        # height = height[:-2] if isinstance(height, str) and "px" in height else height
+        self.style = dict(**PSTYLE)
+        self.style.update(**{'position': 'absolute', 'overflow': 'hidden', 'opacity': o,
+                             'left': x, 'top': y, 'width': '{}px'.format(w), 'height': '{}px'.format(h),
+                             'background-image': 'url({})'.format(img),
+                             'background-position': '{} {}'.format(0, 0),
+                             #'background-size': '{}px {}px'.format(w, h)
+                             'background-size': tipo,
+                             'background-repeat': 'no-repeat'
+                             })
+        # self.style["min-width"], self.style["min-height"] = w, h
+        self.style.update(**style)
+        self.elt = html.DIV(Id=tit, title=tit, style=self.style)
+        self.xy = (-111, -111)
+        self.scorer = dict(ponto=1, valor=cena.nome, carta=tit or img, casa=self.xy, move=None)
+        self.scorer.update(score)
+        # if False:
+        #     self._img = html.IMG(Id="img_" + tit, src=img, title=tit, alt=alt,
+        #                         style=EIMGSTY)  # width=self.style["width"])
+        #     self.elt <= self._img
+        self.elt.onclick = self._click
+        self.c(**kwargs)
+        # _ = Dragger(self.elt) if drag else None
+        # _ = Droppable(self.elt, drop, self.vai) if drop else None
+        _ = self.entra(cena) if cena and (cena != INVENTARIO) else None
+        self.elt.ondragstart = lambda ev: self._drag(ev)
+        self.elt.onmouseover = lambda ev: self._over(ev)
+        self.elt.ondrop = lambda ev: self._drop(ev)
+        self.elt.ondragover = lambda ev: self._dover(ev)
+        # self._img.onmousedown = self._img_prevent
+        self.do_drag(drag)
+        self.do_drop(drop)
+        #Elemento._scorer_()
+    def do_score(self, tit):
+        if tit not in FIX_SCORE:
+            FIX_SCORE[tit] = int(Elemento._score.score_.html) + 1
+            Elemento._score.score_.html = FIX_SCORE[tit]
+    @classmethod
+    def _scorer_(cls):
+        Elemento._scorer_ = lambda *_ : None
+        Elemento._score = scr = Elemento(SCORE)
+        scr.score_ = html.H2("0")
+        scr.elt <= scr.score_
+        scr.entra(INVENTARIO)
+ 
+    def ocupa(self, ocupante):
+        if hasattr(ocupante, 'elt'):
+            self.elt <= ocupante.elt
+        else:
+            self.elt <= ocupante
+
+    def foi(self):
+        self._do_foi()
+
+    def _do_foi(self):
+        style = {'opacity': "inherited", 'width': 30, 'height': "30px", 'min-height': '30px', 'float': 'left',
+                 'position': 'unset', 'overflow': 'hidden',
+                 'background-image': 'url({})'.format(self._img),
+                 'background-position': '{} {}'.format(0, 0),
+                 'background-size': '{}px {}px'.format(30, 20),
+                 }
+        self.do_drag(False)
+        # Texto(self.cena, "Finally,got my correct name: {}".format(self.tit)).vai()
+        _texto = self.texto if self.tit == self.title else CORRECT.format(self.tit)
+        self.vai = Texto(self.cena, _texto).vai
+
+        clone_mic = Elemento(self._img, tit=self.title, drag=True, style=style, cena=INVENTARIO)
+        clone_mic.entra(INVENTARIO)
+        self._do_foi = lambda *_: None
+                         
+    @property
+    def texto(self):
+        """Recupera o objeto texto falado pelo objeto"""
+        return self._texto
+                         
+    @texto.setter
+    def texto(self, tex):
+        """Recebe o texto que o elemento deve falar
+        
+            :param tex: texto que o elemento deve falar
+        """
+        self._texto = self._texto or Texto(self.cena, tex, foi=self._foi)
+	self.vai = self._texto.vai
+                         
+    @property
+    def siz(self):
+        """Recupera uma tupla de inteiros reportando o tamanho da imagem do elemento"""
+        siz = self.elt.style.backgroundSize
+        siz = [int("".join(i for i in c if i.isdigit())) for c in siz.split()]
+        return siz
+                         
+    @siz.setter
+    def siz(self, wh):
+        """Recebe uma tupla de inteiros definindo o tamanho da imagem do elemento
+        
+            :param wh: w - tamanho da imagem na horizontal a partir da esquerda
+            :param hh: h - tamanho da imagem na vertical a partir do topo
+        """
+        self.elt.style.backgroundSize = "{}px {}px".format(*wh)
+                         
+    @property
+    def pos(self):
+        """Recupera uma tupla de inteiros reportando a posição da imagem do elemento"""
+        pos = self.elt.style.backgroundPosition
+        pos = [int("".join(i for i in c if i.isdigit())) for c in pos.split()]
+        return pos
+                         
+    @pos.setter
+    def pos(self, xy):
+        """Recebe uma tupla de inteiros definindo a posição da imagem do elemento
+        
+            :param xy: x - posição da imagem na horizontal a partir da esquerda
+            :param xy: y - posição da imagem na vertical a partir do topo
+        """
+        self.elt.style.backgroundPosition = '{}px {}px'.format(*xy)
+                         
+    @property
+    def img(self):
+        """Recupera a URI da imagem do elemento"""
+        img = self.elt.style.backgroundImage
+        img = img.split('"')[1] if '"' in img else ""
+        return img
+                         
+    @img.setter
+    def img(self, value):
+        """Atribui a imagem do elemento para este novo valor
+            :param value: URI da imagem
+        """
+        self.elt.style.backgroundImage = "url({})".format(value)
+                         
+    @property
+    def o(self):
+        return int(self.elt.style.opacity)
+                         
+    @o.setter
+    def o(self, value):
+        self.elt.style.opacity = value
+                         
+    @property
+    def x(self):
+        return int(self.elt.style.left[:-2])
+                         
+    @x.setter
+    def x(self, value):
+        self.elt.style.left = "{}px".format(value)
+                         
+    @property
+    def y(self):
+        return int(self.elt.style.top[:-2])
+                         
+    @y.setter
+    def y(self, value):
+        self.elt.style.top = "{}px".format(value)
+                         
+    @property
+    def w(self):
+        return int(self.elt.style.width[:-2])
+                         
+    @w.setter
+    def w(self, value):
+        self.elt.style.width = "{}px".format(value)
+                         
+    @property
+    def h(self):
+        return int(self.elt.style.height[:-2])
+                         
+    @h.setter
+    def h(self, value):
+        self.elt.style.height = "{}px".format(value)
+
+    @property
+    def tit(self):
+        return self.elt.title
+
+    @tit.setter
+    def tit(self, texto):
+        self.elt.title = texto
+
+
+    @property
+    def style(self):
+        return self.elt.style
+
+    @style.setter
+    def style_set(self, texto):
+        self.elt.style = texto
+
+
+    @property
+    def drag(self):
+        return self.elt.draggable
+
+    @drag.setter
+    def drag_set(self, condition):
+        self.do_drag(condition)
+
+
+    @property
+    def drop(self):
+        return self.dropper
+
+    @drop.setter
+    def drop_set(self, texto):
+        self.dropper = texto
+
+    def img_prevent(self, ev):
+        ev.preventDefault()
+        ev.stopPropagation()
+        return False
+
+    def mouse_over(self, ev):
+        # ev.preventDefault()
+        ev.target.style.cursor = "pointer"
+        return False
+
+    def img_drag_start(self, ev):
+        # ev.preventDefault()
+        ev.stopPropagation()
+        return False
+
+    def drag_start(self, ev):
+        # ev.preventDefault()
+        ev.stopPropagation()
+        ev.data['text'] = ev.target.id
+        ev.data.effectAllowed = 'move'
+        return False
+
+    def do_drag(self, drag=True):
+        self.elt.draggable = drag
+        if drag:
+            self._drag = self.drag_start
+            self._over = self.mouse_over
+        else:
+            self._drag = self._over = self.img_prevent
+
+    def do_drop(self, drop=""):
+        if drop:
+            self._drop = self.drop
+            self._dover = self.drag_over
+        else:
+            self._drop = self._dover = self.img_prevent
+
+    def drag_over(self, ev):
+        ev.data.dropEffect = 'move'
+        ev.preventDefault()
+        return False
+
+    def drop(self, ev):
+        ev.preventDefault()
+        ev.stopPropagation()
+        src_id = ev.data['text']
+        tit = document[src_id].title
+        self.dropper.setdefault(tit, lambda *_: None)(ev, tit)
+
 class Codigo(Elemento):
     """
     Um objeto de interação que é representado por uma trecho de código em uma cena.
@@ -487,7 +804,7 @@ class Codigo(Elemento):
     :param cena: cena onde o objeto vai ser colocado
     """
     def __init__(self, codigo="", topo="", cena=INVENTARIO, img="", vai=None, style=NS):
-        self.img = img
+        self._img = img
         self.vai = vai if vai else lambda _=0: None
         self.cena = cena
         self.opacity = 0
@@ -499,8 +816,8 @@ class Codigo(Elemento):
         istyle = dict(EIMGSTY)
         istyle.update(opacity=0.3)
         if img:
-            self.img = html.IMG(src=img, style=istyle)
-            self.elt <= self.img
+            self._img = html.IMG(src=img, style=istyle)
+            self.elt <= self._img
         if topo:
             self.topo = html.DIV(color="black", style=dict(padding="15px"))
             self.topo.html = topo
@@ -887,6 +1204,7 @@ class Popup:
         self._vai = vai
         self.optar = {}
         Popup.__setup__()
+        Popup.inicia()
         if isinstance(cena, Cena):
             self.d(cena, tit, txt)
 
@@ -906,19 +1224,24 @@ class Popup:
             def __init__(self, tela=DOC_PYDIV):
                 self.tela = tela
                 self.optou = ""
+                self.foi = None
                 self.popup = html.DIV(Id="__popup__", Class="overlay")
                 self.div = div = html.DIV(Class="popup")
                 self.tit = html.H2()
-                a = html.A("&times;", Class="close", href="#")
+                self.a = html.A("×", Class="close", href="#")
                 self.go = html.A(Id="txt_button", Class="button", href="#__popup__")
                 self.go.onclick = self._open
-                a.onclick = self._close
+                self.a.onclick = self._close
                 self.alt = html.DIV(Class="content")
                 self.popup <= div
                 self.popup.style = {"visibility": "hidden", "opacity": 0}
-                div <= self.tit
-                div <= a
-                div <= self.alt
+                self.inicia()
+            def inicia(self):
+                self.foi = lambda *_: None
+                self.div.html = ""
+                self.div <= self.tit
+                self.div <= self.a
+                self.div <= self.alt
 
             def __repr__(self):
                 return "<Popup>"
@@ -935,12 +1258,15 @@ class Popup:
 
             def monta_optar(self, **kwargs):
                 def opcao(letra):
-                    self.optou = letra
+                    self.foi(letra)
+
+                def _close():
+                    self.popup.style = {"visibility": "hidden", "opacity": 0}
 
                 def opta(letra, texto):
                     div = html.DIV(Class="content")
                     optou = html.A(chr(ABOXED + ord(letra) - ord("A")), Class="option", href="#")
-                    optou.onclick = lambda *_: opcao(letra) or self._close()
+                    optou.onclick = lambda *_: _close() or opcao(letra)
                     texto_opcao = html.SPAN(texto)
                     div <= optou
                     div <= texto_opcao
@@ -951,12 +1277,11 @@ class Popup:
                     self.div <= opta(*op)
 
             def mostra(self, act, tit="", txt="", **kwargs):
+                self.foi = act if act else self.foi
                 if tit or txt:
                     self.tit.text, self.alt.text = tit, txt
                 self.monta_optar(**kwargs)
-                # self.popup.style = {"visibility": "visible", "opacity": 0.7}
                 self._open()
-                act()
 
         Popup.POP = Pop()
         Popup.__setup__ = lambda: None
@@ -969,32 +1294,42 @@ class Popup:
         cena.vai = lambda *_, **__: Popup.POP.mostra(act, tit, txt)
         return cena
 
+    @staticmethod
+    def inicia():
+        Popup.POP.inicia()
+
 
 class Texto(Popup):
     def __init__(self, cena=NADA, tit="", txt="", foi=None, **kwargs):
         super().__init__(None, tit=tit, txt=txt, vai=None, **kwargs)
-        #self.elt = Popup.POP.popup
         self.cena = cena
+        self.kwargs = kwargs
         self.esconde = foi if foi else self.esconde
-        #cena <= self
+
+    @property  
+    def foi(self):
+        return self.esconde
+
+    @foi.setter  
+    def foi(self, value):
+        self.esconde = value
 
     def esconde(self, ev=NoEv()):
-        ...
-
-    def mostra(self, tit="", txt="", **kwargs):
-        self.elt = Popup.POP.popup
-        self.cena.elt <= self.elt
-        Popup.POP.mostra(lambda *_: None, tit=tit, txt=txt, **kwargs)
-        
-        Popup.POP.esconde = self.esconde
         pass
 
+    def mostra(self, tit="", txt="", act=None, **kwargs):
+        kwargs = kwargs if kwargs else self.kwargs
+        act = act if act else lambda *_: None
+        self.elt = Popup.POP.popup
+        self.cena.elt <= self.elt
+        
+        Popup.POP.esconde = self.esconde
+        Popup.POP.mostra(act, tit=tit, txt=txt, **kwargs)
+
     def vai(self, ev=NoEv()):
-        # self.elt = Popup.POP.popup
         ev.stopPropagation()
         self.cena.elt <= Popup.POP.popup
-        Popup.POP.mostra(lambda *_: None, self.tit, self.txt)
-        Popup.POP.esconde = self.esconde
+        self.mostra(self.tit, self.txt, act=self.esconde)
         return False
 
     @staticmethod
@@ -1418,6 +1753,10 @@ class Jogo:
         self.window = win
         self.timer = timer
         pass
+
+    def z(self):
+        """ Zera, limpa a área de desenho"""
+        DOC_PYDIV.html = ""
 
     @property
     def cena(self):

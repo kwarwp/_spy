@@ -45,9 +45,6 @@ Ator = namedtuple('Elenco','ator nome mini alinha')
 Fala = namedtuple('Fala','ator fala prox age')  # , defaults=(None,)*4)
 A = namedtuple('Ali','e m d')(-1, 0, 1)
 
-
-# STYLE.update(width=850, height="650px")
-
 IMGUR = "https://i.imgur.com/{}.jpg"
 FUNDO = "qWcEao4"
 CENAS = "CRNsfXO swVe1IW jiJY1NY GsdFmpz T6pmXbY dJ4WOIh".split()
@@ -172,8 +169,6 @@ class Cubos:
         :param ofx: deslocamento na horizontal.
         :param ofy: deslocamento na vertical.
         """
-
-        # from vitollino.main import Cena, Elemento
 
         class Face(Elemento):
             """Reperesenta a face do cubo.
@@ -342,4 +337,6 @@ class Cubos:
 
 
 if __name__ == "__main__":
+    from vitollino.main import STYLE
+    STYLE.update(width=850, height="650px")
     Cubos(CENAS, tw=500, nx=2, ny=2)
