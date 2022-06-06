@@ -1740,25 +1740,13 @@ A = namedtuple('Ali','e m d')(-1, 0, 1)
 
 class Roteiro:
     def __init__(self, cena, roteiro, elenco=(), foi=None):
-        """Cria um roteiro de falas entre diversos personagens.
-        Os parâmetros roteiro e elenco são definidos por tupla nomeadas.
-            Ator
-                ator:
-                    instância de elemento do ator que no diálogo.
-                nome:
-                    nome que vai aparecer no título do ator.
-                mini:
-                    fração da altura do ator na miniatura (0.1 a 1.0)
-                alinha:
-        :param cena: cena onde o diálogo acontece.
-        :param roteiro: um conjunto de falas entre os personagens.
-        :param elenco: caracterização dos personagens.
-        :param foi: número de cubos na horizontal.
-        """
         self.dic_ator = {a.ator: a for a in elenco}
         _prox = zip(roteiro, roteiro[1:] + [Fala(None, "", None, None)])
         self.foi = foi if foi else lambda *_: None
         roteiro = [Fala(a, f, g if g else (p.ator if p else None), x) for [a, f, g, x], p in _prox]
+        # print(list(prox))
+        # print(roteiro)
+        # return
         self.elenco, self.roteiro = elenco, roteiro
         self._foi = lambda *_: None
         script = self
