@@ -1752,7 +1752,9 @@ class Jogo:
         self.html = html
         self.window = win
         self.timer = timer
-        pass
+        from _spy.vitollino.jogos import Roteiro
+	self.rt = self.roteiro = Roteiro
+
 
     def z(self):
         """ Zera, limpa a área de desenho"""
