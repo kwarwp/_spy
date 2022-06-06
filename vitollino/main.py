@@ -1226,7 +1226,7 @@ class Popup:
                 self.optou = ""
                 self.foi = None
                 self.popup = html.DIV(Id="__popup__", Class="overlay")
-                self.div = div = html.DIV(Class="popup")
+                self.div = div = html.DIV(Id="__baloon__", Class="popup")
                 self.tit = html.H2()
                 self.a = html.A("×", Class="close", href="#")
                 self.go = html.A(Id="txt_button", Class="button", href="#__popup__")
