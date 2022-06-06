@@ -20,7 +20,7 @@
 "phyllis": {"author_nick": "WorkShop_2020", "author_name": "Workshop SupyGirls Outubro 20202", "author_email": "carlo@nce.ufrj.br", "author_org": "LABASE", "author_site": "labase.nce.ufrj.br", "author_public": "on"},
 "elizabeth": {"author_nick": "WorkShop_2020", "author_name": "Workshop SupyGirls Outubro 20202", "author_email": "carlo@nce.ufrj.br", "author_org": "LABASE", "author_site": "labase.nce.ufrj.br", "author_public": "on"},
 "joanna": {"author_nick": "bellexand", "author_name": "isabelle alexandre da silva", "author_email": "isabellesilva031@gmail.com", "author_org": "", "author_site": "", "author_public": "on"},
-"grete": {"author_nick": "dfssf", "author_name": "sdfd", "author_email": "akakaka@gmail.com", "author_org": "", "author_site": "", "author_public": "on"},
+"grete": {"author_nick": "ST_Agora_18", "author_name": "ST_Agora_18", "author_email": "akakaka@gmail.com", "author_org": "Agora", "author_site": "http://colegioagoraniteroi.com.br/", "author_public": "on"},
 "megan": {"author_nick": "katia", "author_name": "Katia Guimarães Sousa Palomo", "author_email": "profa.katia.palomo@gmail.com", "author_org": "Instituto Federal de Brasília", "author_site": "www.ifb.edu.br", "author_public": "on"},
 "joan": {"author_nick": "STEAM_CL", "author_name": "STEAM_CL", "author_email": "cici.rco@gmail.com", "author_org": "", "author_site": "", "author_public": "on"},
 "radia": {"author_nick": "NEW_00", "author_name": "NEW_00", "author_email": "", "author_org": "", "author_site": "", "author_public": "on"},
