@@ -8,6 +8,7 @@
 "mary_shaw": {"author_nick": "POO PPGI 19.3", "author_name": "Labase - Disciplina de ProgramaÃ§Ã£o Orientada a Objetos - PPGI 2019-3", "author_email": "carlo@ufrj.br", "author_org": "LABASE", "author_site": "labase.nce.ufrj.br", "author_public": "on"},
 "vera": {"author_nick": "fonocomp_II_19", "author_name": "Fonocomp II 2019", "author_email": "hello@ub.br", "author_org": "", "author_site": "", "author_public": "on"},
 "gertrude": {"author_nick": "fonocomp_II_18", "author_name": "Fonocomp II 2018", "author_email": "hello@ub.br", "author_org": "LABASE", "author_site": "labase.nce.ufrj.br", "author_public": "on"},
+"grace": {"author_nick": "dev_agl_22_II", "author_name": "Dev Agl 2022 II", "author_email": "hello@ub.br", "author_org": "LABASE", "author_site": "labase.nce.ufrj.br", "author_public": "on"},
 "betty": {"author_nick": "fonocomp_I_18", "author_name": "Fonocomp I 2018", "author_email": "hello@ub.br", "author_org": "LABASE", "author_site": "labase.nce.ufrj.br", "author_public": "on"},
 "anita": {"author_nick": "SupyGirls_D_Piza", "author_name": "SupyGirls D. Piza", "author_email": "hello@ub.br", "author_org": "LABASE", "author_site": "labase.nce.ufrj.br", "author_public": "on"},
 "karen": {"author_nick": "CDERJ_Hortência", "author_name": "CEDERJ Students oriented by Isabel Hortência", "author_email": "hortencia.garnica@nce.ufrj.br", "author_org": "CDERJ", "author_site": "https://www.cecierj.edu.br", "author_public": "on"},
