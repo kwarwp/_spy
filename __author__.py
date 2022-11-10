@@ -29,3 +29,4 @@
 "radia": {"author_nick": "NEW_00", "author_name": "NEW_00", "author_email": "", "author_org": "", "author_site": "", "author_public": "on"},
 "irma": {"author_nick": "NEW_01", "author_name": "NEW_01", "author_email": "", "author_org": "", "author_site": "", "author_public": "on"},
 "monica": {"author_nick": "NEW_02", "author_name": "NEW_02", "author_email": "", "author_org": "", "author_site": "", "author_public": "on"},
+"donna": {"author_nick": "Daniel_Pisa_2022", "author_name": "Daniel_Pisa_2022", "author_email": "", "author_org": "", "author_site": "", "author_public": "on"},
